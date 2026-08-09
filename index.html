@@ -1,767 +1,1363 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Shadei Sabino — Senior Full-Stack &amp; AI/RAG Platform Engineer</title>
-<meta name="description" content="Senior full-stack developer specializing in RAG pipelines, LLM integration, and cybersecurity platform architecture." />
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --bg: #0a0e14;
-    --bg-elevated: #10151d;
-    --bg-elevated-2: #161d28;
-    --border: #1e2530;
-    --border-bright: #2a3340;
-    --text-primary: #e7ecef;
-    --text-secondary: #8b98a5;
-    --text-tertiary: #5c6772;
-    --amber: #ffb020;
-    --amber-dim: #ffb02022;
-    --teal: #45d9c7;
-    --teal-dim: #45d9c722;
-    --red: #ff5c5c;
-    --mono: 'IBM Plex Mono', ui-monospace, monospace;
-    --sans: 'Inter', -apple-system, sans-serif;
-  }
-
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-
-  html { scroll-behavior: smooth; }
-
-  @media (prefers-reduced-motion: reduce) {
-    html { scroll-behavior: auto; }
-    *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
-  }
-
-  body {
-    background: var(--bg);
-    color: var(--text-primary);
-    font-family: var(--sans);
-    line-height: 1.6;
-    overflow-x: hidden;
-  }
-
-  a { color: inherit; text-decoration: none; }
-
-  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
-
-  /* ---------- Top status bar ---------- */
-  .statusbar {
-    background: var(--bg-elevated);
-    border-bottom: 1px solid var(--border);
-    font-family: var(--mono);
-    font-size: 0.72rem;
-    color: var(--text-tertiary);
-    letter-spacing: 0.03em;
-  }
-  .statusbar .wrap {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding-top: 8px;
-    padding-bottom: 8px;
-    flex-wrap: wrap;
-    gap: 6px;
-  }
-  .statusbar .dot {
-    display: inline-block;
-    width: 6px; height: 6px;
-    border-radius: 50%;
-    background: var(--teal);
-    margin-right: 8px;
-    box-shadow: 0 0 0 0 var(--teal-dim);
-    animation: pulse 2.2s infinite;
-  }
-  @keyframes pulse {
-    0% { box-shadow: 0 0 0 0 rgba(69,217,199,0.5); }
-    70% { box-shadow: 0 0 0 6px rgba(69,217,199,0); }
-    100% { box-shadow: 0 0 0 0 rgba(69,217,199,0); }
-  }
-  .statusbar .status-ok { color: var(--teal); }
-
-  /* ---------- Nav ---------- */
-  nav {
-    position: sticky;
-    top: 0;
-    z-index: 50;
-    background: rgba(10,14,20,0.85);
-    backdrop-filter: blur(10px);
-    border-bottom: 1px solid var(--border);
-  }
-  .nav-inner {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 16px 0;
-  }
-  .logo {
-    font-family: var(--mono);
-    font-weight: 600;
-    font-size: 0.95rem;
-    color: var(--text-primary);
-  }
-  .logo span { color: var(--amber); }
-  .nav-links {
-    display: flex;
-    gap: 32px;
-    list-style: none;
-    font-size: 0.88rem;
-    font-family: var(--mono);
-    color: var(--text-secondary);
-  }
-  .nav-links a { transition: color 0.2s; position: relative; }
-  .nav-links a:hover { color: var(--text-primary); }
-  .nav-links a::before { content: "· "; color: var(--amber); opacity: 0; transition: opacity 0.2s; }
-  .nav-links a:hover::before { opacity: 1; }
-  .mobile-btn { display: none; background: none; border: 1px solid var(--border-bright); color: var(--text-primary); font-size: 1.1rem; padding: 6px 10px; border-radius: 4px; cursor: pointer; }
-
-  @media (max-width: 760px) {
-    .nav-links { display: none; }
-    .mobile-btn { display: block; }
-    .nav-links.open {
-      display: flex; flex-direction: column; gap: 0;
-      position: absolute; top: 100%; left: 0; right: 0;
-      background: var(--bg-elevated); border-bottom: 1px solid var(--border);
-      padding: 8px 24px 16px;
-    }
-    .nav-links.open li { padding: 10px 0; border-bottom: 1px solid var(--border); }
-  }
-
-  /* ---------- Hero ---------- */
-  .hero {
-    padding: 96px 0 72px;
-    position: relative;
-  }
-  .hero .wrap { display: grid; grid-template-columns: 1.3fr 0.9fr; gap: 56px; align-items: center; }
-  @media (max-width: 860px) { .hero .wrap { grid-template-columns: 1fr; gap: 40px; } .hero { padding: 56px 0 48px; } }
-
-  .eyebrow {
-    font-family: var(--mono);
-    font-size: 0.8rem;
-    color: var(--amber);
-    letter-spacing: 0.08em;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-bottom: 20px;
-  }
-  .eyebrow::before { content: ""; width: 22px; height: 1px; background: var(--amber); display: inline-block; }
-
-  .hero h1 {
-    font-family: var(--mono);
-    font-size: clamp(2rem, 5vw, 3.1rem);
-    font-weight: 600;
-    line-height: 1.15;
-    letter-spacing: -0.01em;
-    margin-bottom: 20px;
-  }
-  .hero h1 .cursor {
-    display: inline-block;
-    width: 3px;
-    height: 0.9em;
-    background: var(--teal);
-    margin-left: 4px;
-    animation: blink 1s step-end infinite;
-    vertical-align: -0.1em;
-  }
-  @keyframes blink { 50% { opacity: 0; } }
-
-  #typed-role { color: var(--teal); }
-
-  .hero p.lede {
-    font-size: 1.05rem;
-    color: var(--text-secondary);
-    max-width: 52ch;
-    margin-bottom: 32px;
-  }
-  .hero .cta-row { display: flex; gap: 14px; flex-wrap: wrap; }
-
-  .btn {
-    font-family: var(--mono);
-    font-size: 0.88rem;
-    padding: 12px 22px;
-    border-radius: 4px;
-    border: 1px solid var(--border-bright);
-    transition: all 0.2s ease;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-  }
-  .btn-primary { background: var(--amber); color: #10151d; border-color: var(--amber); font-weight: 600; }
-  .btn-primary:hover { background: #ffc44d; transform: translateY(-1px); }
-  .btn-ghost { color: var(--text-primary); }
-  .btn-ghost:hover { border-color: var(--teal); color: var(--teal); }
-
-  .hero-photo {
-    position: relative;
-    border: 1px solid var(--border-bright);
-    border-radius: 8px;
-    overflow: hidden;
-    background: var(--bg-elevated);
-  }
-  .hero-photo::before {
-    content: "";
-    position: absolute; inset: 0;
-    background: linear-gradient(160deg, transparent 55%, rgba(255,176,32,0.12));
-    z-index: 2; pointer-events: none;
-  }
-  .hero-photo img { width: 100%; display: block; filter: grayscale(15%) contrast(1.05); }
-  .hero-photo .tag {
-    position: absolute; bottom: 12px; left: 12px;
-    font-family: var(--mono); font-size: 0.7rem;
-    background: rgba(10,14,20,0.85); border: 1px solid var(--border-bright);
-    padding: 4px 10px; border-radius: 4px; color: var(--teal); z-index: 3;
-  }
-
-  /* ---------- Metrics strip ---------- */
-  .metrics {
-    border-top: 1px solid var(--border);
-    border-bottom: 1px solid var(--border);
-    background: var(--bg-elevated);
-  }
-  .metrics .wrap { display: grid; grid-template-columns: repeat(4, 1fr); }
-  @media (max-width: 700px) { .metrics .wrap { grid-template-columns: repeat(2, 1fr); } }
-  .metric {
-    padding: 28px 20px;
-    border-right: 1px solid var(--border);
-    text-align: center;
-  }
-  .metric:last-child { border-right: none; }
-  .metric .num {
-    font-family: var(--mono); font-size: 1.7rem; font-weight: 600; color: var(--text-primary);
-  }
-  .metric .num span { color: var(--amber); }
-  .metric .lbl { font-size: 0.78rem; color: var(--text-tertiary); margin-top: 4px; font-family: var(--mono); }
-
-  /* ---------- Section shell ---------- */
-  section { padding: 88px 0; }
-  .sec-head { margin-bottom: 48px; }
-  .sec-eyebrow {
-    font-family: var(--mono); font-size: 0.78rem; color: var(--amber);
-    letter-spacing: 0.08em; margin-bottom: 10px;
-  }
-  .sec-title { font-family: var(--mono); font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 600; }
-  .sec-sub { color: var(--text-secondary); margin-top: 10px; max-width: 60ch; }
-
-  .reveal { opacity: 0; transform: translateY(18px); transition: opacity 0.6s ease, transform 0.6s ease; }
-  .reveal.in { opacity: 1; transform: translateY(0); }
-
-  /* ---------- About ---------- */
-  .about-grid { display: grid; grid-template-columns: 1.4fr 1fr; gap: 48px; }
-  @media (max-width: 800px) { .about-grid { grid-template-columns: 1fr; } }
-  .about-text p { color: var(--text-secondary); margin-bottom: 16px; }
-  .about-text strong { color: var(--text-primary); font-weight: 600; }
-
-  .focus-list { display: flex; flex-direction: column; gap: 14px; }
-  .focus-item {
-    border: 1px solid var(--border);
-    background: var(--bg-elevated);
-    border-radius: 6px;
-    padding: 16px 18px;
-    border-left: 2px solid var(--teal);
-  }
-  .focus-item h4 { font-family: var(--mono); font-size: 0.9rem; margin-bottom: 4px; }
-  .focus-item p { font-size: 0.85rem; color: var(--text-secondary); }
-
-  /* ---------- Skills ---------- */
-  .skill-group { margin-bottom: 28px; }
-  .skill-group h3 {
-    font-family: var(--mono); font-size: 0.85rem; color: var(--text-tertiary);
-    text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 14px;
-    display: flex; align-items: center; gap: 10px;
-  }
-  .skill-group h3::after { content: ""; flex: 1; height: 1px; background: var(--border); }
-  .chip-row { display: flex; flex-wrap: wrap; gap: 10px; }
-  .chip {
-    font-family: var(--mono); font-size: 0.82rem;
-    border: 1px solid var(--border-bright);
-    background: var(--bg-elevated);
-    padding: 7px 13px; border-radius: 4px;
-    color: var(--text-secondary);
-    transition: border-color 0.2s, color 0.2s;
-  }
-  .chip:hover { border-color: var(--amber); color: var(--text-primary); }
-
-  /* ---------- Experience (log style) ---------- */
-  .log { position: relative; padding-left: 28px; }
-  .log::before { content: ""; position: absolute; left: 5px; top: 6px; bottom: 6px; width: 1px; background: var(--border-bright); }
-  .log-entry { position: relative; padding-bottom: 44px; }
-  .log-entry:last-child { padding-bottom: 0; }
-  .log-entry::before {
-    content: ""; position: absolute; left: -28px; top: 4px;
-    width: 11px; height: 11px; border-radius: 50%;
-    background: var(--bg); border: 2px solid var(--amber);
-  }
-  .log-entry.current::before { background: var(--amber); }
-  .log-meta { font-family: var(--mono); font-size: 0.76rem; color: var(--text-tertiary); margin-bottom: 6px; }
-  .log-meta .badge-live {
-    color: var(--teal); border: 1px solid var(--teal); border-radius: 3px;
-    padding: 1px 7px; margin-left: 8px; font-size: 0.68rem;
-  }
-  .log-role { font-family: var(--mono); font-size: 1.05rem; font-weight: 600; }
-  .log-company { color: var(--text-secondary); font-size: 0.92rem; margin-bottom: 12px; }
-  .log-details { color: var(--text-secondary); font-size: 0.92rem; }
-  .log-details li { margin-bottom: 7px; margin-left: 18px; }
-  .log-tech { margin-top: 14px; display: flex; flex-wrap: wrap; gap: 8px; }
-  .log-tech span {
-    font-family: var(--mono); font-size: 0.72rem; color: var(--text-tertiary);
-    border: 1px solid var(--border); padding: 3px 9px; border-radius: 3px;
-  }
-  .log-toggle {
-    font-family: var(--mono); font-size: 0.8rem; color: var(--teal);
-    cursor: pointer; margin-top: 10px; display: inline-block;
-    border: none; background: none;
-  }
-  .log-hidden { display: none; }
-
-  /* ---------- Projects ---------- */
-  .proj-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
-  @media (max-width: 760px) { .proj-grid { grid-template-columns: 1fr; } }
-  .proj-card {
-    border: 1px solid var(--border);
-    background: var(--bg-elevated);
-    border-radius: 8px;
-    padding: 24px;
-    transition: transform 0.25s ease, border-color 0.25s ease;
-  }
-  .proj-card:hover { transform: translateY(-4px); border-color: var(--border-bright); }
-  .proj-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 14px; }
-  .proj-badge {
-    font-family: var(--mono); font-size: 0.68rem;
-    padding: 3px 8px; border-radius: 3px;
-    border: 1px solid var(--border-bright); color: var(--text-tertiary);
-  }
-  .proj-badge.nda { color: var(--red); border-color: rgba(255,92,92,0.4); }
-  .proj-title { font-family: var(--mono); font-size: 1.05rem; font-weight: 600; margin-bottom: 10px; }
-  .proj-desc { color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 16px; }
-  .proj-tech { display: flex; flex-wrap: wrap; gap: 7px; }
-  .proj-tech span {
-    font-family: var(--mono); font-size: 0.7rem; color: var(--teal);
-    background: var(--teal-dim); padding: 3px 8px; border-radius: 3px;
-  }
-
-  /* ---------- Contact ---------- */
-  .contact-panel {
-    border: 1px solid var(--border-bright);
-    background: var(--bg-elevated);
-    border-radius: 10px;
-    padding: 56px 40px;
-    text-align: center;
-    position: relative;
-    overflow: hidden;
-  }
-  .contact-panel::before {
-    content: "";
-    position: absolute; inset: 0;
-    background: radial-gradient(circle at 30% 0%, rgba(255,176,32,0.08), transparent 60%);
-  }
-  .contact-panel h2 { font-family: var(--mono); font-size: 1.7rem; margin-bottom: 12px; position: relative; }
-  .contact-panel p { color: var(--text-secondary); margin-bottom: 28px; position: relative; }
-  .contact-links { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; position: relative; }
-
-  footer {
-    border-top: 1px solid var(--border);
-    padding: 28px 0;
-    text-align: center;
-    font-family: var(--mono);
-    font-size: 0.78rem;
-    color: var(--text-tertiary);
-  }
-</style>
-</head>
-<body>
-
-  <div class="statusbar">
-    <div class="wrap">
-      <div><span class="dot"></span><span class="status-ok">SYSTEM STATUS: AVAILABLE FOR NEW PROJECTS</span></div>
-      <div>UPTIME: 9.5 YRS &nbsp;|&nbsp; LAST DEPLOY: 2026</div>
-    </div>
-  </div>
-
-  <nav>
-    <div class="wrap nav-inner">
-      <div class="logo">SHADEI<span>_</span>SABINO</div>
-      <ul class="nav-links" id="navLinks">
-        <li><a href="#about">about</a></li>
-        <li><a href="#skills">skills</a></li>
-        <li><a href="#experience">experience</a></li>
-        <li><a href="#projects">projects</a></li>
-        <li><a href="#contact">contact</a></li>
-      </ul>
-      <button class="mobile-btn" id="mobileBtn">☰</button>
-    </div>
-  </nav>
-
-  <section class="hero">
-    <div class="wrap">
-      <div class="hero-text">
-        <div class="eyebrow">SENIOR FULL-STACK &amp; PLATFORM ENGINEER</div>
-        <h1>Building systems for<br><span id="typed-role"></span><span class="cursor"></span></h1>
-        <p class="lede">
-          9+ years architecting secure, scalable platforms for U.S. clients — now focused
-          on RAG pipelines, LLM integration, and AI-powered systems for cybersecurity
-          operations. I turn raw operational data into real-time, actionable intelligence.
-        </p>
-        <div class="cta-row">
-          <a href="#contact" class="btn btn-primary">Start a project →</a>
-          <a href="#projects" class="btn btn-ghost">View work</a>
-          <a href="./cv/shadei-sabino-cv.pdf" class="btn btn-ghost" download>Download CV ↓</a>
-        </div>
-      </div>
-      <div class="hero-photo">
-        <img src="./images/profile.png" alt="Shadei Sabino" />
-        <span class="tag">est. 2015</span>
-      </div>
-    </div>
-  </section>
-
-  <div class="metrics">
-    <div class="wrap">
-      <div class="metric"><div class="num"><span>9.5</span>+</div><div class="lbl">YEARS EXPERIENCE</div></div>
-      <div class="metric"><div class="num"><span>15</span>+</div><div class="lbl">PROJECTS SHIPPED</div></div>
-      <div class="metric"><div class="num"><span>6</span></div><div class="lbl">COMPANIES TRUSTED</div></div>
-      <div class="metric"><div class="num"><span>3</span></div><div class="lbl">LLM PROVIDERS INTEGRATED</div></div>
-    </div>
-  </div>
-
-  <section id="about">
-    <div class="wrap">
-      <div class="sec-head reveal">
-        <div class="sec-eyebrow">// 01 — ABOUT</div>
-        <h2 class="sec-title">Platform architect, security-minded</h2>
-      </div>
-      <div class="about-grid reveal">
-        <div class="about-text">
-          <p>
-            I'm a full-stack developer and platform architect specializing in
-            <strong>enterprise application development, cloud infrastructure, and
-            security compliance</strong>. My work spans modernizing legacy systems,
-            implementing CI/CD pipelines, and building scalable microservices
-            architectures for U.S.-based clients.
-          </p>
-          <p>
-            Over the last two years my focus has shifted toward <strong>applied AI</strong>:
-            designing RAG pipelines with hybrid vector and keyword search, integrating
-            LLM workflows (Claude, OpenAI, Gemini) via the Model Context Protocol, and
-            building multi-agent systems that assist real security operations teams —
-            including compliance-ready platforms across HIPAA, SOC, SIEM, and Wazuh.
-          </p>
-          <p>
-            I thrive working closely with security, operations, and product teams to
-            deliver solutions that hold up under real production load — not just demos.
-          </p>
-        </div>
-        <div class="focus-list">
-          <div class="focus-item">
-            <h4>AI / RAG Engineering</h4>
-            <p>Hybrid retrieval, LLM orchestration, MCP servers, multi-agent workflows.</p>
-          </div>
-          <div class="focus-item">
-            <h4>Security Platform Architecture</h4>
-            <p>SIEM/Wazuh integration, RBAC, JWT auth, audit logging, SOC tooling.</p>
-          </div>
-          <div class="focus-item">
-            <h4>Full-Stack Delivery</h4>
-            <p>FastAPI, Laravel, React — from data model to deployed, monitored system.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section id="skills" style="background: var(--bg-elevated); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
-    <div class="wrap">
-      <div class="sec-head reveal">
-        <div class="sec-eyebrow">// 02 — STACK</div>
-        <h2 class="sec-title">Technical skills</h2>
-        <p class="sec-sub">Tools I reach for across AI, backend, and infrastructure work.</p>
-      </div>
-
-      <div class="reveal">
-        <div class="skill-group">
-          <h3>AI / LLM &amp; Retrieval</h3>
-          <div class="chip-row">
-            <span class="chip">LLM Integration (Claude/OpenAI/Gemini)</span>
-            <span class="chip">RAG Pipelines</span>
-            <span class="chip">Hybrid RAG (Vector + Keyword)</span>
-            <span class="chip">MCP</span>
-            <span class="chip">Multi-Agent Orchestration</span>
-            <span class="chip">Prompt Engineering</span>
-          </div>
-        </div>
-        <div class="skill-group">
-          <h3>Languages &amp; Runtimes</h3>
-          <div class="chip-row">
-            <span class="chip">Python</span><span class="chip">FastAPI</span>
-            <span class="chip">PHP</span><span class="chip">JAVA</span>
-            <span class="chip">Groovy</span><span class="chip">Node.js</span>
-            <span class="chip">TypeScript</span><span class="chip">C#</span>
-            <span class="chip">Bash</span>
-          </div>
-        </div>
-        <div class="skill-group">
-          <h3>Frameworks &amp; Frontend</h3>
-          <div class="chip-row">
-            <span class="chip">Laravel</span><span class="chip">Grails</span>
-            <span class="chip">Express.js</span><span class="chip">Next.js</span>
-            <span class="chip">React</span><span class="chip">Vue.js</span>
-            <span class="chip">ExtJS</span><span class="chip">Quasar</span>
-            <span class="chip">n8n</span>
-          </div>
-        </div>
-        <div class="skill-group">
-          <h3>Data &amp; Storage</h3>
-          <div class="chip-row">
-            <span class="chip">MySQL</span><span class="chip">MongoDB</span>
-            <span class="chip">Redis</span><span class="chip">OpenSearch</span>
-            <span class="chip">Vector Search (k-NN)</span>
-          </div>
-        </div>
-        <div class="skill-group">
-          <h3>Cloud, DevOps &amp; Security</h3>
-          <div class="chip-row">
-            <span class="chip">AWS (EC2/Lambda/S3/CloudFormation)</span>
-            <span class="chip">Docker</span><span class="chip">CI/CD</span>
-            <span class="chip">SIEM / Wazuh</span><span class="chip">SOC Operations</span>
-            <span class="chip">HIPAA Compliance</span><span class="chip">RBAC</span>
-            <span class="chip">JWT Auth</span><span class="chip">Audit Logging</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section id="experience">
-    <div class="wrap">
-      <div class="sec-head reveal">
-        <div class="sec-eyebrow">// 03 — EXPERIENCE LOG</div>
-        <h2 class="sec-title">Where I've shipped</h2>
-      </div>
-
-      <div class="log reveal">
-
-        <div class="log-entry current">
-          <div class="log-meta">JAN 2024 — PRESENT <span class="badge-live">LIVE</span></div>
-          <div class="log-role">Senior Software Developer — Platform Architecture, AI &amp; Security Engineering</div>
-          <div class="log-company">USX Cyber · Cybersecurity</div>
-          <ul class="log-details">
-            <li>Architect and lead delivery of AI-powered cybersecurity modules, including designing a Retrieval-Augmented Generation (RAG) pipeline with hybrid vector and keyword search (OpenSearch k-NN) to power an LLM-driven SOC analyst assistant, enabling faster and more accurate alert triage.</li>
-            <li>Design and integrate LLM workflows (Claude, OpenAI, Gemini) into operational tooling via the Model Context Protocol (MCP), building reusable multi-tenant MCP servers that expose secure, scoped access to SharePoint, SIEM, and knowledge-base data.</li>
-            <li>Build production Python microservices with FastAPI to serve AI/RAG endpoints, orchestrate multi-agent workflows, and expose secure, documented APIs consumed by internal and client-facing applications.</li>
-            <li>Define and maintain target platform architecture, ensuring scalability, maintainability, security, and alignment with long-term business objectives.</li>
-            <li>Develop automation workflows and integrations using n8n, AWS services, Wazuh, Spiceworks, and other enterprise platforms to streamline operational processes and reporting.</li>
-            <li>Establish development standards, coding conventions, and architectural guidelines for backend and frontend engineering teams; mentor and train junior developers on secure coding practices, API design, and AI/RAG integration patterns.</li>
-            <li>Design and implement Role-Based Access Control (RBAC), authentication, authorization, and security controls across applications and services.</li>
-          </ul>
-          <div class="log-tech">
-            <span>Python</span><span>FastAPI</span><span>PHP</span><span>ReactJS</span><span>Drupal</span><span>Docker</span><span>Redis</span><span>AWS</span><span>CloudFormation</span><span>n8n</span><span>LLM APIs</span><span>RAG</span><span>OpenSearch k-NN</span><span>MCP</span><span>CI/CD</span>
-          </div>
-        </div>
-
-        <div class="log-entry">
-          <div class="log-meta">AUG 2023 — FEB 2024</div>
-          <div class="log-role">Backend Game Developer</div>
-          <div class="log-company">FanYou PH Inc.</div>
-          <ul class="log-details">
-            <li>Managed and maintained game data, including player data, game statistics, and in-game assets across live titles.</li>
-            <li>Maintained the server side of FanYou's existing game products, ensuring uptime and performance under real-time load.</li>
-            <li>Developed gameplay logic and algorithms in close collaboration with front-end programmers.</li>
-            <li>Built APIs and web services enabling communication between game clients and servers.</li>
-            <li><em>Key Projects: Box, MoWang, and SkyStory</em> — created a web application server using Express.js to build RESTful APIs, integrated real-time functionality using WebSocket for chat and live in-app updates, and implemented an NGINX-based microservice architecture.</li>
-          </ul>
-          <div class="log-tech"><span>PHP</span><span>TypeScript</span><span>JavaScript</span><span>Node.js</span><span>Express.js</span><span>WebSocket</span><span>C#</span><span>Redis</span></div>
-        </div>
-
-        <div class="log-entry">
-          <div class="log-meta">AUG 2021 — JUL 2023</div>
-          <div class="log-role">Senior Software Developer</div>
-          <div class="log-company">HEDY Philippines Inc.</div>
-          <ul class="log-details">
-            <li>Designed, developed, and implemented robust, scalable microservices architecture integrated with Drupal and Laravel-based systems.</li>
-            <li>Owned software testing, bug fixing, and technical documentation processes.</li>
-            <li>Developed and maintained APIs across Drupal and Laravel to support integrations and reliable inter-service communication.</li>
-            <li>Integrated third-party APIs using OAuth2 machine-to-machine authentication.</li>
-          </ul>
-          <div class="log-tech"><span>PHP</span><span>Laravel 9</span><span>JavaScript</span><span>MySQL</span><span>AWS</span><span>Drupal 10</span></div>
-        </div>
-
-        <button class="log-toggle" id="logToggle">show earlier roles (2015–2021) ↓</button>
-
-        <div class="log-hidden" id="logHidden">
-          <div class="log-entry">
-            <div class="log-meta">JUL 2019 — AUG 2021</div>
-            <div class="log-role">Senior Software Developer</div>
-            <div class="log-company">StackTrek Enterprise Inc.</div>
-            <ul class="log-details">
-              <li>Troubleshot, debugged, and resolved issues across microservices, APIs, and backend integrations.</li>
-              <li>Optimized API performance, scalability, and security.</li>
-              <li>Implemented and managed authentication and authorization across microservices, including OAuth2, JWT, and custom API keys.</li>
-              <li>Partnered with cross-functional teams to gather requirements and define integration points aligned with business goals and technical constraints.</li>
-            </ul>
-            <div class="log-tech"><span>PHP</span><span>Groovy on Grails</span><span>JavaScript</span><span>MySQL</span><span>Drupal</span></div>
-          </div>
-
-          <div class="log-entry">
-            <div class="log-meta">MAR 2018 — SEP 2018</div>
-            <div class="log-role">Software Developer</div>
-            <div class="log-company">Grow Forward JP Inc.</div>
-            <ul class="log-details">
-              <li>Developed and maintained front-end and back-end components of web applications with seamless integration.</li>
-              <li>Ensured cross-browser compatibility and mobile responsiveness.</li>
-              <li>Integrated payment gateway APIs; troubleshot and resolved production issues quickly, minimizing downtime and user impact.</li>
-            </ul>
-            <div class="log-tech"><span>PHP</span><span>JavaScript</span><span>MySQL</span><span>.NET</span><span>WordPress</span></div>
-          </div>
-
-          <div class="log-entry">
-            <div class="log-meta">JUN 2015 — SEP 2017</div>
-            <div class="log-role">Software Developer</div>
-            <div class="log-company">Hinduja Global Solutions</div>
-            <ul class="log-details">
-              <li>Led software deployment and Linux server application configuration and tuning.</li>
-              <li>Worked closely with business analysts to determine the right tech stack for each initiative.</li>
-              <li><em>Project: Gamification and Centralized Info Blog Platform</em> — built a Node.js blog platform allowing users to create, edit, and delete posts, integrated MongoDB for storing and retrieving content, and implemented RESTful APIs for CRUD operations.</li>
-            </ul>
-            <div class="log-tech"><span>PHP</span><span>JAVA</span><span>Laravel 5</span><span>Node.js</span><span>Python</span><span>MongoDB</span></div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <section id="projects" style="background: var(--bg-elevated); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
-    <div class="wrap">
-      <div class="sec-head reveal">
-        <div class="sec-eyebrow">// 04 — SELECTED WORK</div>
-        <h2 class="sec-title">Recent projects</h2>
-      </div>
-
-      <div class="proj-grid reveal">
-        <div class="proj-card">
-          <div class="proj-top">
-            <span class="proj-badge nda">PRIVATE / NDA</span>
-          </div>
-          <div class="proj-title">Customer Portal &amp; SOAR Platform</div>
-          <p class="proj-desc">Comprehensive security orchestration platform with automated metric generation, CI/CD pipelines, and CloudFormation infrastructure automation for cybersecurity monitoring and response workflows.</p>
-          <div class="proj-tech"><span>React</span><span>Node.js</span><span>AWS</span><span>n8n</span><span>Docker</span></div>
-        </div>
-
-        <div class="proj-card">
-          <div class="proj-top">
-            <span class="proj-badge nda">PRIVATE / NDA</span>
-          </div>
-          <div class="proj-title">Gaming Backend System</div>
-          <p class="proj-desc">Scalable game server infrastructure with real-time WebSocket communication, RESTful APIs, and microservices architecture for multiple live gaming products.</p>
-          <div class="proj-tech"><span>Node.js</span><span>Express.js</span><span>WebSocket</span><span>Redis</span></div>
-        </div>
-
-        <div class="proj-card">
-          <div class="proj-top">
-            <span class="proj-badge nda">PRIVATE / NDA</span>
-          </div>
-          <div class="proj-title">Healthcare Booking System</div>
-          <p class="proj-desc">Booking platform on a Laravel backend with microservices integration, Medpass API, and OAuth2-secured healthcare data handling.</p>
-          <div class="proj-tech"><span>Laravel 9</span><span>MySQL</span><span>AWS</span><span>OAuth2</span></div>
-        </div>
-
-        <div class="proj-card">
-          <div class="proj-top">
-            <span class="proj-badge nda">PRIVATE / NDA</span>
-          </div>
-          <div class="proj-title">Hospital Management System</div>
-          <p class="proj-desc">Enterprise hospital management platform with microservices architecture, reverse proxy integration, and secure authentication (OAuth2, JWT) for healthcare operations.</p>
-          <div class="proj-tech"><span>Groovy on Grails</span><span>PHP</span><span>MySQL</span><span>Drupal</span></div>
-        </div>
-
-        <div class="proj-card">
-          <div class="proj-top">
-            <span class="proj-badge nda">PRIVATE / NDA</span>
-          </div>
-          <div class="proj-title">Payment Gateway Integration</div>
-          <p class="proj-desc">Robot Payment API integration for a coaching tool platform — secure payment processing, transaction management, and cross-browser checkout flows.</p>
-          <div class="proj-tech"><span>PHP</span><span>MySQL</span><span>WordPress</span><span>.NET</span></div>
-        </div>
-
-        <div class="proj-card">
-          <div class="proj-top">
-            <span class="proj-badge nda">PRIVATE / NDA</span>
-          </div>
-          <div class="proj-title">Centralized Blog Platform</div>
-          <p class="proj-desc">Scalable blog platform with RESTful API architecture — content creation, editing, user management, and gamification elements.</p>
-          <div class="proj-tech"><span>Node.js</span><span>MongoDB</span><span>Express.js</span><span>Laravel 5</span></div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section id="contact">
-    <div class="wrap reveal">
-      <div class="contact-panel">
-        <h2>Let's build something that ships.</h2>
-        <p>Open to new projects — AI/RAG integration, security platform work, or full-stack builds.</p>
-        <div class="contact-links">
-          <a href="mailto:sabinoshadei@gmail.com" class="btn btn-primary">sabinoshadei@gmail.com</a>
-          <a href="tel:0992-247-8714" class="btn btn-ghost">0992-247-8714</a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <footer>
-    <div class="wrap">© 2026 Shadei Sabino — built and deployed with care.</div>
-  </footer>
-
-  <script>
-    // Typing effect for hero role
-    const roles = ["AI-powered SOC platforms.", "RAG pipelines that ship.", "secure enterprise systems."];
-    const el = document.getElementById('typed-role');
-    let ri = 0, ci = 0, deleting = false;
-    function tick() {
-      const word = roles[ri];
-      if (!deleting) {
-        el.textContent = word.slice(0, ci + 1);
-        ci++;
-        if (ci === word.length) { deleting = true; setTimeout(tick, 1400); return; }
-      } else {
-        el.textContent = word.slice(0, ci - 1);
-        ci--;
-        if (ci === 0) { deleting = false; ri = (ri + 1) % roles.length; }
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      Shadei Sabino — Senior Full-Stack &amp; AI/RAG Platform Engineer
+    </title>
+    <meta
+      name="description"
+      content="Senior full-stack developer specializing in RAG pipelines, LLM integration, and cybersecurity platform architecture."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #0a0e14;
+        --bg-elevated: #10151d;
+        --bg-elevated-2: #161d28;
+        --border: #1e2530;
+        --border-bright: #2a3340;
+        --text-primary: #e7ecef;
+        --text-secondary: #8b98a5;
+        --text-tertiary: #5c6772;
+        --amber: #ffb020;
+        --amber-dim: #ffb02022;
+        --teal: #45d9c7;
+        --teal-dim: #45d9c722;
+        --red: #ff5c5c;
+        --mono: "IBM Plex Mono", ui-monospace, monospace;
+        --sans: "Inter", -apple-system, sans-serif;
       }
-      setTimeout(tick, deleting ? 35 : 65);
-    }
-    tick();
 
-    // Mobile nav
-    document.getElementById('mobileBtn').addEventListener('click', () => {
-      document.getElementById('navLinks').classList.toggle('open');
-    });
-    document.querySelectorAll('.nav-links a').forEach(a => {
-      a.addEventListener('click', () => document.getElementById('navLinks').classList.remove('open'));
-    });
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
 
-    // Scroll reveal
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('in');
-          observer.unobserve(entry.target);
+      html {
+        scroll-behavior: smooth;
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
         }
+        *,
+        *::before,
+        *::after {
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.01ms !important;
+        }
+      }
+
+      body {
+        background: var(--bg);
+        color: var(--text-primary);
+        font-family: var(--sans);
+        line-height: 1.6;
+        overflow-x: hidden;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      .wrap {
+        max-width: 1080px;
+        margin: 0 auto;
+        padding: 0 24px;
+      }
+
+      /* ---------- Top status bar ---------- */
+      .statusbar {
+        background: var(--bg-elevated);
+        border-bottom: 1px solid var(--border);
+        font-family: var(--mono);
+        font-size: 0.72rem;
+        color: var(--text-tertiary);
+        letter-spacing: 0.03em;
+      }
+      .statusbar .wrap {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding-top: 8px;
+        padding-bottom: 8px;
+        flex-wrap: wrap;
+        gap: 6px;
+      }
+      .statusbar .dot {
+        display: inline-block;
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: var(--teal);
+        margin-right: 8px;
+        box-shadow: 0 0 0 0 var(--teal-dim);
+        animation: pulse 2.2s infinite;
+      }
+      @keyframes pulse {
+        0% {
+          box-shadow: 0 0 0 0 rgba(69, 217, 199, 0.5);
+        }
+        70% {
+          box-shadow: 0 0 0 6px rgba(69, 217, 199, 0);
+        }
+        100% {
+          box-shadow: 0 0 0 0 rgba(69, 217, 199, 0);
+        }
+      }
+      .statusbar .status-ok {
+        color: var(--teal);
+      }
+
+      /* ---------- Nav ---------- */
+      nav {
+        position: sticky;
+        top: 0;
+        z-index: 50;
+        background: rgba(10, 14, 20, 0.85);
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid var(--border);
+      }
+      .nav-inner {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 16px 0;
+      }
+      .logo {
+        font-family: var(--mono);
+        font-weight: 600;
+        font-size: 0.95rem;
+        color: var(--text-primary);
+      }
+      .logo span {
+        color: var(--amber);
+      }
+      .nav-links {
+        display: flex;
+        gap: 32px;
+        list-style: none;
+        font-size: 0.88rem;
+        font-family: var(--mono);
+        color: var(--text-secondary);
+      }
+      .nav-links a {
+        transition: color 0.2s;
+        position: relative;
+      }
+      .nav-links a:hover {
+        color: var(--text-primary);
+      }
+      .nav-links a::before {
+        content: "· ";
+        color: var(--amber);
+        opacity: 0;
+        transition: opacity 0.2s;
+      }
+      .nav-links a:hover::before {
+        opacity: 1;
+      }
+      .mobile-btn {
+        display: none;
+        background: none;
+        border: 1px solid var(--border-bright);
+        color: var(--text-primary);
+        font-size: 1.1rem;
+        padding: 6px 10px;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+
+      @media (max-width: 760px) {
+        .nav-links {
+          display: none;
+        }
+        .mobile-btn {
+          display: block;
+        }
+        .nav-links.open {
+          display: flex;
+          flex-direction: column;
+          gap: 0;
+          position: absolute;
+          top: 100%;
+          left: 0;
+          right: 0;
+          background: var(--bg-elevated);
+          border-bottom: 1px solid var(--border);
+          padding: 8px 24px 16px;
+        }
+        .nav-links.open li {
+          padding: 10px 0;
+          border-bottom: 1px solid var(--border);
+        }
+      }
+
+      /* ---------- Hero ---------- */
+      .hero {
+        padding: 96px 0 72px;
+        position: relative;
+      }
+      .hero .wrap {
+        display: grid;
+        grid-template-columns: 1.3fr 0.9fr;
+        gap: 56px;
+        align-items: center;
+      }
+      @media (max-width: 860px) {
+        .hero .wrap {
+          grid-template-columns: 1fr;
+          gap: 40px;
+        }
+        .hero {
+          padding: 56px 0 48px;
+        }
+      }
+
+      .eyebrow {
+        font-family: var(--mono);
+        font-size: 0.8rem;
+        color: var(--amber);
+        letter-spacing: 0.08em;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 20px;
+      }
+      .eyebrow::before {
+        content: "";
+        width: 22px;
+        height: 1px;
+        background: var(--amber);
+        display: inline-block;
+      }
+
+      .hero h1 {
+        font-family: var(--mono);
+        font-size: clamp(2rem, 5vw, 3.1rem);
+        font-weight: 600;
+        line-height: 1.15;
+        letter-spacing: -0.01em;
+        margin-bottom: 20px;
+      }
+      .hero h1 .cursor {
+        display: inline-block;
+        width: 3px;
+        height: 0.9em;
+        background: var(--teal);
+        margin-left: 4px;
+        animation: blink 1s step-end infinite;
+        vertical-align: -0.1em;
+      }
+      @keyframes blink {
+        50% {
+          opacity: 0;
+        }
+      }
+
+      #typed-role {
+        color: var(--teal);
+        font-size: 20px;
+      }
+
+      .hero p.lede {
+        font-size: 1.05rem;
+        color: var(--text-secondary);
+        max-width: 52ch;
+        margin-bottom: 32px;
+      }
+      .hero .cta-row {
+        display: flex;
+        gap: 14px;
+        flex-wrap: wrap;
+      }
+
+      .btn {
+        font-family: var(--mono);
+        font-size: 0.88rem;
+        padding: 12px 22px;
+        border-radius: 4px;
+        border: 1px solid var(--border-bright);
+        transition: all 0.2s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .btn-primary {
+        background: var(--amber);
+        color: #10151d;
+        border-color: var(--amber);
+        font-weight: 600;
+      }
+      .btn-primary:hover {
+        background: #ffc44d;
+        transform: translateY(-1px);
+      }
+      .btn-ghost {
+        color: var(--text-primary);
+      }
+      .btn-ghost:hover {
+        border-color: var(--teal);
+        color: var(--teal);
+      }
+
+      .hero-photo {
+        position: relative;
+        border: 1px solid var(--border-bright);
+        border-radius: 8px;
+        overflow: hidden;
+        background: var(--bg-elevated);
+      }
+      .hero-photo::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          160deg,
+          transparent 55%,
+          rgba(255, 176, 32, 0.12)
+        );
+        z-index: 2;
+        pointer-events: none;
+      }
+      .hero-photo img {
+        width: 100%;
+        display: block;
+        filter: grayscale(15%) contrast(1.05);
+      }
+      .hero-photo .tag {
+        position: absolute;
+        bottom: 12px;
+        left: 12px;
+        font-family: var(--mono);
+        font-size: 0.7rem;
+        background: rgba(10, 14, 20, 0.85);
+        border: 1px solid var(--border-bright);
+        padding: 4px 10px;
+        border-radius: 4px;
+        color: var(--teal);
+        z-index: 3;
+      }
+
+      /* ---------- Metrics strip ---------- */
+      .metrics {
+        border-top: 1px solid var(--border);
+        border-bottom: 1px solid var(--border);
+        background: var(--bg-elevated);
+      }
+      .metrics .wrap {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+      }
+      @media (max-width: 700px) {
+        .metrics .wrap {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+      .metric {
+        padding: 28px 20px;
+        border-right: 1px solid var(--border);
+        text-align: center;
+      }
+      .metric:last-child {
+        border-right: none;
+      }
+      .metric .num {
+        font-family: var(--mono);
+        font-size: 1.7rem;
+        font-weight: 600;
+        color: var(--text-primary);
+      }
+      .metric .num span {
+        color: var(--amber);
+      }
+      .metric .lbl {
+        font-size: 0.78rem;
+        color: var(--text-tertiary);
+        margin-top: 4px;
+        font-family: var(--mono);
+      }
+
+      /* ---------- Section shell ---------- */
+      section {
+        padding: 88px 0;
+      }
+      .sec-head {
+        margin-bottom: 48px;
+      }
+      .sec-eyebrow {
+        font-family: var(--mono);
+        font-size: 0.78rem;
+        color: var(--amber);
+        letter-spacing: 0.08em;
+        margin-bottom: 10px;
+      }
+      .sec-title {
+        font-family: var(--mono);
+        font-size: clamp(1.5rem, 3vw, 2rem);
+        font-weight: 600;
+      }
+      .sec-sub {
+        color: var(--text-secondary);
+        margin-top: 10px;
+        max-width: 60ch;
+      }
+
+      .reveal {
+        opacity: 0;
+        transform: translateY(18px);
+        transition: opacity 0.6s ease, transform 0.6s ease;
+      }
+      .reveal.in {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* ---------- About ---------- */
+      .about-grid {
+        display: grid;
+        grid-template-columns: 1.4fr 1fr;
+        gap: 48px;
+      }
+      @media (max-width: 800px) {
+        .about-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+      .about-text p {
+        color: var(--text-secondary);
+        margin-bottom: 16px;
+      }
+      .about-text strong {
+        color: var(--text-primary);
+        font-weight: 600;
+      }
+
+      .focus-list {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+      }
+      .focus-item {
+        border: 1px solid var(--border);
+        background: var(--bg-elevated);
+        border-radius: 6px;
+        padding: 16px 18px;
+        border-left: 2px solid var(--teal);
+      }
+      .focus-item h4 {
+        font-family: var(--mono);
+        font-size: 0.9rem;
+        margin-bottom: 4px;
+      }
+      .focus-item p {
+        font-size: 0.85rem;
+        color: var(--text-secondary);
+      }
+
+      /* ---------- Skills ---------- */
+      .skill-group {
+        margin-bottom: 28px;
+      }
+      .skill-group h3 {
+        font-family: var(--mono);
+        font-size: 0.85rem;
+        color: var(--text-tertiary);
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        margin-bottom: 14px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .skill-group h3::after {
+        content: "";
+        flex: 1;
+        height: 1px;
+        background: var(--border);
+      }
+      .chip-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+      .chip {
+        font-family: var(--mono);
+        font-size: 0.82rem;
+        border: 1px solid var(--border-bright);
+        background: var(--bg-elevated);
+        padding: 7px 13px;
+        border-radius: 4px;
+        color: var(--text-secondary);
+        transition: border-color 0.2s, color 0.2s;
+      }
+      .chip:hover {
+        border-color: var(--amber);
+        color: var(--text-primary);
+      }
+
+      /* ---------- Experience (log style) ---------- */
+      .log {
+        position: relative;
+        padding-left: 28px;
+      }
+      .log::before {
+        content: "";
+        position: absolute;
+        left: 5px;
+        top: 6px;
+        bottom: 6px;
+        width: 1px;
+        background: var(--border-bright);
+      }
+      .log-entry {
+        position: relative;
+        padding-bottom: 44px;
+      }
+      .log-entry:last-child {
+        padding-bottom: 0;
+      }
+      .log-entry::before {
+        content: "";
+        position: absolute;
+        left: -28px;
+        top: 4px;
+        width: 11px;
+        height: 11px;
+        border-radius: 50%;
+        background: var(--bg);
+        border: 2px solid var(--amber);
+      }
+      .log-entry.current::before {
+        background: var(--amber);
+      }
+      .log-meta {
+        font-family: var(--mono);
+        font-size: 0.76rem;
+        color: var(--text-tertiary);
+        margin-bottom: 6px;
+      }
+      .log-meta .badge-live {
+        color: var(--teal);
+        border: 1px solid var(--teal);
+        border-radius: 3px;
+        padding: 1px 7px;
+        margin-left: 8px;
+        font-size: 0.68rem;
+      }
+      .log-role {
+        font-family: var(--mono);
+        font-size: 1.05rem;
+        font-weight: 600;
+      }
+      .log-company {
+        color: var(--text-secondary);
+        font-size: 0.92rem;
+        margin-bottom: 12px;
+      }
+      .log-details {
+        color: var(--text-secondary);
+        font-size: 0.92rem;
+      }
+      .log-details li {
+        margin-bottom: 7px;
+        margin-left: 18px;
+      }
+      .log-tech {
+        margin-top: 14px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+      .log-tech span {
+        font-family: var(--mono);
+        font-size: 0.72rem;
+        color: var(--text-tertiary);
+        border: 1px solid var(--border);
+        padding: 3px 9px;
+        border-radius: 3px;
+      }
+      .log-toggle {
+        font-family: var(--mono);
+        font-size: 0.8rem;
+        color: var(--teal);
+        cursor: pointer;
+        margin-top: 10px;
+        display: inline-block;
+        border: none;
+        background: none;
+      }
+      .log-hidden {
+        display: none;
+      }
+
+      /* ---------- Projects ---------- */
+      .proj-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 24px;
+      }
+      @media (max-width: 760px) {
+        .proj-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+      .proj-card {
+        border: 1px solid var(--border);
+        background: var(--bg-elevated);
+        border-radius: 8px;
+        padding: 24px;
+        transition: transform 0.25s ease, border-color 0.25s ease;
+      }
+      .proj-card:hover {
+        transform: translateY(-4px);
+        border-color: var(--border-bright);
+      }
+      .proj-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 14px;
+      }
+      .proj-badge {
+        font-family: var(--mono);
+        font-size: 0.68rem;
+        padding: 3px 8px;
+        border-radius: 3px;
+        border: 1px solid var(--border-bright);
+        color: var(--text-tertiary);
+      }
+      .proj-badge.nda {
+        color: var(--red);
+        border-color: rgba(255, 92, 92, 0.4);
+      }
+      .proj-title {
+        font-family: var(--mono);
+        font-size: 1.05rem;
+        font-weight: 600;
+        margin-bottom: 10px;
+      }
+      .proj-desc {
+        color: var(--text-secondary);
+        font-size: 0.9rem;
+        margin-bottom: 16px;
+      }
+      .proj-tech {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 7px;
+      }
+      .proj-tech span {
+        font-family: var(--mono);
+        font-size: 0.7rem;
+        color: var(--teal);
+        background: var(--teal-dim);
+        padding: 3px 8px;
+        border-radius: 3px;
+      }
+
+      /* ---------- Contact ---------- */
+      .contact-panel {
+        border: 1px solid var(--border-bright);
+        background: var(--bg-elevated);
+        border-radius: 10px;
+        padding: 56px 40px;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+      }
+      .contact-panel::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(
+          circle at 30% 0%,
+          rgba(255, 176, 32, 0.08),
+          transparent 60%
+        );
+      }
+      .contact-panel h2 {
+        font-family: var(--mono);
+        font-size: 1.7rem;
+        margin-bottom: 12px;
+        position: relative;
+      }
+      .contact-panel p {
+        color: var(--text-secondary);
+        margin-bottom: 28px;
+        position: relative;
+      }
+      .contact-links {
+        display: flex;
+        gap: 16px;
+        justify-content: center;
+        flex-wrap: wrap;
+        position: relative;
+      }
+
+      footer {
+        border-top: 1px solid var(--border);
+        padding: 28px 0;
+        text-align: center;
+        font-family: var(--mono);
+        font-size: 0.78rem;
+        color: var(--text-tertiary);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="statusbar">
+      <div class="wrap">
+        <div>
+          <span class="dot"></span
+          ><span class="status-ok"
+            >SYSTEM STATUS: AVAILABLE FOR NEW PROJECTS</span
+          >
+        </div>
+        <div>UPTIME: 9.5 YRS &nbsp;|&nbsp; LAST DEPLOY: 2026</div>
+      </div>
+    </div>
+
+    <nav>
+      <div class="wrap nav-inner">
+        <div class="logo">SHADEI<span>_</span>SABINO</div>
+        <ul class="nav-links" id="navLinks">
+          <li><a href="#about">about</a></li>
+          <li><a href="#skills">skills</a></li>
+          <li><a href="#experience">experience</a></li>
+          <li><a href="#projects">projects</a></li>
+          <li><a href="#contact">contact</a></li>
+        </ul>
+        <button class="mobile-btn" id="mobileBtn">☰</button>
+      </div>
+    </nav>
+
+    <section class="hero">
+      <div class="wrap">
+        <div class="hero-text">
+          <div class="eyebrow">SENIOR FULL-STACK &amp; PLATFORM ENGINEER</div>
+          <h1>
+            Building systems for<br /><span id="typed-role"></span
+            ><span class="cursor"></span>
+          </h1>
+          <p class="lede">
+            9+ years architecting secure, scalable platforms for U.S. clients —
+            now focused on RAG pipelines, LLM integration, and AI-powered
+            systems for cybersecurity operations. I turn raw operational data
+            into real-time, actionable intelligence.
+          </p>
+          <div class="cta-row">
+            <a href="#contact" class="btn btn-primary">Start a project →</a>
+            <a href="#projects" class="btn btn-ghost">View work</a>
+            <a href="./cv/shadei-sabino-cv.pdf" class="btn btn-ghost" download
+              >Download CV ↓</a
+            >
+          </div>
+        </div>
+        <div class="hero-photo">
+          <img src="./images/profile.png" alt="Shadei Sabino" />
+          <span class="tag">est. 2015</span>
+        </div>
+      </div>
+    </section>
+
+    <div class="metrics">
+      <div class="wrap">
+        <div class="metric">
+          <div class="num"><span>9.5</span>+</div>
+          <div class="lbl">YEARS EXPERIENCE</div>
+        </div>
+        <div class="metric">
+          <div class="num"><span>15</span>+</div>
+          <div class="lbl">PROJECTS SHIPPED</div>
+        </div>
+        <div class="metric">
+          <div class="num"><span>6</span></div>
+          <div class="lbl">COMPANIES TRUSTED</div>
+        </div>
+        <div class="metric">
+          <div class="num"><span>3</span></div>
+          <div class="lbl">LLM PROVIDERS INTEGRATED</div>
+        </div>
+      </div>
+    </div>
+
+    <section id="about">
+      <div class="wrap">
+        <div class="sec-head reveal">
+          <div class="sec-eyebrow">// 01 — ABOUT</div>
+          <h2 class="sec-title">Platform architect, security-minded</h2>
+        </div>
+        <div class="about-grid reveal">
+          <div class="about-text">
+            <p>
+              I'm a full-stack developer and platform architect specializing in
+              <strong
+                >enterprise application development, cloud infrastructure, and
+                security compliance</strong
+              >. My work spans modernizing legacy systems, implementing CI/CD
+              pipelines, and building scalable microservices architectures for
+              U.S.-based clients.
+            </p>
+            <p>
+              Over the last two years my focus has shifted toward
+              <strong>applied AI</strong>: designing RAG pipelines with hybrid
+              vector and keyword search, integrating LLM workflows (Claude,
+              OpenAI, Gemini) via the Model Context Protocol, and building
+              multi-agent systems that assist real security operations teams —
+              including compliance-ready platforms across HIPAA, SOC, SIEM, and
+              Wazuh.
+            </p>
+            <p>
+              I thrive working closely with security, operations, and product
+              teams to deliver solutions that hold up under real production load
+              — not just demos.
+            </p>
+          </div>
+          <div class="focus-list">
+            <div class="focus-item">
+              <h4>AI / RAG Engineering</h4>
+              <p>
+                Hybrid retrieval, LLM orchestration, MCP servers, multi-agent
+                workflows.
+              </p>
+            </div>
+            <div class="focus-item">
+              <h4>Security Platform Architecture</h4>
+              <p>
+                SIEM/Wazuh integration, RBAC, JWT auth, audit logging, SOC
+                tooling.
+              </p>
+            </div>
+            <div class="focus-item">
+              <h4>Full-Stack Delivery</h4>
+              <p>
+                FastAPI, Laravel, React — from data model to deployed, monitored
+                system.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section
+      id="skills"
+      style="
+        background: var(--bg-elevated);
+        border-top: 1px solid var(--border);
+        border-bottom: 1px solid var(--border);
+      "
+    >
+      <div class="wrap">
+        <div class="sec-head reveal">
+          <div class="sec-eyebrow">// 02 — STACK</div>
+          <h2 class="sec-title">Technical skills</h2>
+          <p class="sec-sub">
+            Tools I reach for across AI, backend, and infrastructure work.
+          </p>
+        </div>
+
+        <div class="reveal">
+          <div class="skill-group">
+            <h3>AI / LLM &amp; Retrieval</h3>
+            <div class="chip-row">
+              <span class="chip">LLM Integration (Claude/OpenAI/Gemini)</span>
+              <span class="chip">RAG Pipelines</span>
+              <span class="chip">Hybrid RAG (Vector + Keyword)</span>
+              <span class="chip">MCP</span>
+              <span class="chip">Multi-Agent Orchestration</span>
+              <span class="chip">Prompt Engineering</span>
+            </div>
+          </div>
+          <div class="skill-group">
+            <h3>Languages &amp; Runtimes</h3>
+            <div class="chip-row">
+              <span class="chip">Python</span><span class="chip">FastAPI</span>
+              <span class="chip">PHP</span><span class="chip">JAVA</span>
+              <span class="chip">Groovy</span><span class="chip">Node.js</span>
+              <span class="chip">TypeScript</span><span class="chip">C#</span>
+              <span class="chip">Bash</span>
+            </div>
+          </div>
+          <div class="skill-group">
+            <h3>Frameworks &amp; Frontend</h3>
+            <div class="chip-row">
+              <span class="chip">Laravel</span><span class="chip">Grails</span>
+              <span class="chip">Express.js</span
+              ><span class="chip">Next.js</span> <span class="chip">React</span
+              ><span class="chip">Vue.js</span> <span class="chip">ExtJS</span
+              ><span class="chip">Quasar</span>
+              <span class="chip">n8n</span>
+            </div>
+          </div>
+          <div class="skill-group">
+            <h3>Data &amp; Storage</h3>
+            <div class="chip-row">
+              <span class="chip">MySQL</span><span class="chip">MongoDB</span>
+              <span class="chip">Redis</span
+              ><span class="chip">OpenSearch</span>
+              <span class="chip">Vector Search (k-NN)</span>
+            </div>
+          </div>
+          <div class="skill-group">
+            <h3>Cloud, DevOps &amp; Security</h3>
+            <div class="chip-row">
+              <span class="chip">AWS (EC2/Lambda/S3/CloudFormation)</span>
+              <span class="chip">Docker</span><span class="chip">CI/CD</span>
+              <span class="chip">SIEM / Wazuh</span
+              ><span class="chip">SOC Operations</span>
+              <span class="chip">HIPAA Compliance</span
+              ><span class="chip">RBAC</span> <span class="chip">JWT Auth</span
+              ><span class="chip">Audit Logging</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="experience">
+      <div class="wrap">
+        <div class="sec-head reveal">
+          <div class="sec-eyebrow">// 03 — EXPERIENCE LOG</div>
+          <h2 class="sec-title">Where I've shipped</h2>
+        </div>
+
+        <div class="log reveal">
+          <div class="log-entry current">
+            <div class="log-meta">
+              JAN 2024 — PRESENT <span class="badge-live">LIVE</span>
+            </div>
+            <div class="log-role">
+              Senior Software Developer — Platform Architecture, AI &amp;
+              Security Engineering
+            </div>
+            <div class="log-company">USX Cyber · Cybersecurity</div>
+            <ul class="log-details">
+              <li>
+                Architect and lead delivery of AI-powered cybersecurity modules,
+                including designing a Retrieval-Augmented Generation (RAG)
+                pipeline with hybrid vector and keyword search (OpenSearch k-NN)
+                to power an LLM-driven SOC analyst assistant, enabling faster
+                and more accurate alert triage.
+              </li>
+              <li>
+                Design and integrate LLM workflows (Claude, OpenAI, Gemini) into
+                operational tooling via the Model Context Protocol (MCP),
+                building reusable multi-tenant MCP servers that expose secure,
+                scoped access to SharePoint, SIEM, and knowledge-base data.
+              </li>
+              <li>
+                Build production Python microservices with FastAPI to serve
+                AI/RAG endpoints, orchestrate multi-agent workflows, and expose
+                secure, documented APIs consumed by internal and client-facing
+                applications.
+              </li>
+              <li>
+                Define and maintain target platform architecture, ensuring
+                scalability, maintainability, security, and alignment with
+                long-term business objectives.
+              </li>
+              <li>
+                Develop automation workflows and integrations using n8n, AWS
+                services, Wazuh, Spiceworks, and other enterprise platforms to
+                streamline operational processes and reporting.
+              </li>
+              <li>
+                Establish development standards, coding conventions, and
+                architectural guidelines for backend and frontend engineering
+                teams; mentor and train junior developers on secure coding
+                practices, API design, and AI/RAG integration patterns.
+              </li>
+              <li>
+                Design and implement Role-Based Access Control (RBAC),
+                authentication, authorization, and security controls across
+                applications and services.
+              </li>
+            </ul>
+            <div class="log-tech">
+              <span>Python</span><span>FastAPI</span><span>PHP</span
+              ><span>ReactJS</span><span>Drupal</span><span>Docker</span
+              ><span>Redis</span><span>AWS</span><span>CloudFormation</span
+              ><span>n8n</span><span>LLM APIs</span><span>RAG</span
+              ><span>OpenSearch k-NN</span><span>MCP</span><span>CI/CD</span>
+            </div>
+          </div>
+
+          <div class="log-entry">
+            <div class="log-meta">AUG 2023 — FEB 2024</div>
+            <div class="log-role">Backend Game Developer</div>
+            <div class="log-company">FanYou PH Inc.</div>
+            <ul class="log-details">
+              <li>
+                Managed and maintained game data, including player data, game
+                statistics, and in-game assets across live titles.
+              </li>
+              <li>
+                Maintained the server side of FanYou's existing game products,
+                ensuring uptime and performance under real-time load.
+              </li>
+              <li>
+                Developed gameplay logic and algorithms in close collaboration
+                with front-end programmers.
+              </li>
+              <li>
+                Built APIs and web services enabling communication between game
+                clients and servers.
+              </li>
+              <li>
+                <em>Key Projects: Box, MoWang, and SkyStory</em> — created a web
+                application server using Express.js to build RESTful APIs,
+                integrated real-time functionality using WebSocket for chat and
+                live in-app updates, and implemented an NGINX-based microservice
+                architecture.
+              </li>
+            </ul>
+            <div class="log-tech">
+              <span>PHP</span><span>TypeScript</span><span>JavaScript</span
+              ><span>Node.js</span><span>Express.js</span><span>WebSocket</span
+              ><span>C#</span><span>Redis</span>
+            </div>
+          </div>
+
+          <div class="log-entry">
+            <div class="log-meta">AUG 2021 — JUL 2023</div>
+            <div class="log-role">Senior Software Developer</div>
+            <div class="log-company">HEDY Philippines Inc.</div>
+            <ul class="log-details">
+              <li>
+                Designed, developed, and implemented robust, scalable
+                microservices architecture integrated with Drupal and
+                Laravel-based systems.
+              </li>
+              <li>
+                Owned software testing, bug fixing, and technical documentation
+                processes.
+              </li>
+              <li>
+                Developed and maintained APIs across Drupal and Laravel to
+                support integrations and reliable inter-service communication.
+              </li>
+              <li>
+                Integrated third-party APIs using OAuth2 machine-to-machine
+                authentication.
+              </li>
+            </ul>
+            <div class="log-tech">
+              <span>PHP</span><span>Laravel 9</span><span>JavaScript</span
+              ><span>MySQL</span><span>AWS</span><span>Drupal 10</span>
+            </div>
+          </div>
+
+          <button class="log-toggle" id="logToggle">
+            show earlier roles (2015–2021) ↓
+          </button>
+
+          <div class="log-hidden" id="logHidden">
+            <div class="log-entry">
+              <div class="log-meta">JUL 2019 — AUG 2021</div>
+              <div class="log-role">Senior Software Developer</div>
+              <div class="log-company">StackTrek Enterprise Inc.</div>
+              <ul class="log-details">
+                <li>
+                  Troubleshot, debugged, and resolved issues across
+                  microservices, APIs, and backend integrations.
+                </li>
+                <li>Optimized API performance, scalability, and security.</li>
+                <li>
+                  Implemented and managed authentication and authorization
+                  across microservices, including OAuth2, JWT, and custom API
+                  keys.
+                </li>
+                <li>
+                  Partnered with cross-functional teams to gather requirements
+                  and define integration points aligned with business goals and
+                  technical constraints.
+                </li>
+              </ul>
+              <div class="log-tech">
+                <span>PHP</span><span>Groovy on Grails</span
+                ><span>JavaScript</span><span>MySQL</span><span>Drupal</span>
+              </div>
+            </div>
+
+            <div class="log-entry">
+              <div class="log-meta">MAR 2018 — SEP 2018</div>
+              <div class="log-role">Software Developer</div>
+              <div class="log-company">Grow Forward JP Inc.</div>
+              <ul class="log-details">
+                <li>
+                  Developed and maintained front-end and back-end components of
+                  web applications with seamless integration.
+                </li>
+                <li>
+                  Ensured cross-browser compatibility and mobile responsiveness.
+                </li>
+                <li>
+                  Integrated payment gateway APIs; troubleshot and resolved
+                  production issues quickly, minimizing downtime and user
+                  impact.
+                </li>
+              </ul>
+              <div class="log-tech">
+                <span>PHP</span><span>JavaScript</span><span>MySQL</span
+                ><span>.NET</span><span>WordPress</span>
+              </div>
+            </div>
+
+            <div class="log-entry">
+              <div class="log-meta">JUN 2015 — SEP 2017</div>
+              <div class="log-role">Software Developer</div>
+              <div class="log-company">Hinduja Global Solutions</div>
+              <ul class="log-details">
+                <li>
+                  Led software deployment and Linux server application
+                  configuration and tuning.
+                </li>
+                <li>
+                  Worked closely with business analysts to determine the right
+                  tech stack for each initiative.
+                </li>
+                <li>
+                  <em
+                    >Project: Gamification and Centralized Info Blog
+                    Platform</em
+                  >
+                  — built a Node.js blog platform allowing users to create,
+                  edit, and delete posts, integrated MongoDB for storing and
+                  retrieving content, and implemented RESTful APIs for CRUD
+                  operations.
+                </li>
+              </ul>
+              <div class="log-tech">
+                <span>PHP</span><span>JAVA</span><span>Laravel 5</span
+                ><span>Node.js</span><span>Python</span><span>MongoDB</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section
+      id="projects"
+      style="
+        background: var(--bg-elevated);
+        border-top: 1px solid var(--border);
+        border-bottom: 1px solid var(--border);
+      "
+    >
+      <div class="wrap">
+        <div class="sec-head reveal">
+          <div class="sec-eyebrow">// 04 — SELECTED WORK</div>
+          <h2 class="sec-title">Recent projects</h2>
+        </div>
+
+        <div class="proj-grid reveal">
+          <div class="proj-card">
+            <div class="proj-top">
+              <span class="proj-badge nda">PRIVATE / NDA</span>
+            </div>
+            <div class="proj-title">Customer Portal &amp; SOAR Platform</div>
+            <p class="proj-desc">
+              Comprehensive security orchestration platform with automated
+              metric generation, CI/CD pipelines, and CloudFormation
+              infrastructure automation for cybersecurity monitoring and
+              response workflows.
+            </p>
+            <div class="proj-tech">
+              <span>React</span><span>Node.js</span><span>AWS</span
+              ><span>n8n</span><span>Docker</span>
+            </div>
+          </div>
+
+          <div class="proj-card">
+            <div class="proj-top">
+              <span class="proj-badge nda">PRIVATE / NDA</span>
+            </div>
+            <div class="proj-title">Gaming Backend System</div>
+            <p class="proj-desc">
+              Scalable game server infrastructure with real-time WebSocket
+              communication, RESTful APIs, and microservices architecture for
+              multiple live gaming products.
+            </p>
+            <div class="proj-tech">
+              <span>Node.js</span><span>Express.js</span><span>WebSocket</span
+              ><span>Redis</span>
+            </div>
+          </div>
+
+          <div class="proj-card">
+            <div class="proj-top">
+              <span class="proj-badge nda">PRIVATE / NDA</span>
+            </div>
+            <div class="proj-title">Healthcare Booking System</div>
+            <p class="proj-desc">
+              Booking platform on a Laravel backend with microservices
+              integration, Medpass API, and OAuth2-secured healthcare data
+              handling.
+            </p>
+            <div class="proj-tech">
+              <span>Laravel 9</span><span>MySQL</span><span>AWS</span
+              ><span>OAuth2</span>
+            </div>
+          </div>
+
+          <div class="proj-card">
+            <div class="proj-top">
+              <span class="proj-badge nda">PRIVATE / NDA</span>
+            </div>
+            <div class="proj-title">Hospital Management System</div>
+            <p class="proj-desc">
+              Enterprise hospital management platform with microservices
+              architecture, reverse proxy integration, and secure authentication
+              (OAuth2, JWT) for healthcare operations.
+            </p>
+            <div class="proj-tech">
+              <span>Groovy on Grails</span><span>PHP</span><span>MySQL</span
+              ><span>Drupal</span>
+            </div>
+          </div>
+
+          <div class="proj-card">
+            <div class="proj-top">
+              <span class="proj-badge nda">PRIVATE / NDA</span>
+            </div>
+            <div class="proj-title">Payment Gateway Integration</div>
+            <p class="proj-desc">
+              Robot Payment API integration for a coaching tool platform —
+              secure payment processing, transaction management, and
+              cross-browser checkout flows.
+            </p>
+            <div class="proj-tech">
+              <span>PHP</span><span>MySQL</span><span>WordPress</span
+              ><span>.NET</span>
+            </div>
+          </div>
+
+          <div class="proj-card">
+            <div class="proj-top">
+              <span class="proj-badge nda">PRIVATE / NDA</span>
+            </div>
+            <div class="proj-title">Centralized Blog Platform</div>
+            <p class="proj-desc">
+              Scalable blog platform with RESTful API architecture — content
+              creation, editing, user management, and gamification elements.
+            </p>
+            <div class="proj-tech">
+              <span>Node.js</span><span>MongoDB</span><span>Express.js</span
+              ><span>Laravel 5</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="wrap reveal">
+        <div class="contact-panel">
+          <h2>Let's build something that ships.</h2>
+          <p>
+            Open to new projects — AI/RAG integration, security platform work,
+            or full-stack builds.
+          </p>
+          <div class="contact-links">
+            <a href="mailto:sabinoshadei@gmail.com" class="btn btn-primary"
+              >sabinoshadei@gmail.com</a
+            >
+            <a href="tel:0992-247-8714" class="btn btn-ghost">0992-247-8714</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div class="wrap">
+        © 2026 Shadei Sabino — built and deployed with care.
+      </div>
+    </footer>
+
+    <script>
+      // Typing effect for hero role
+      const roles = [
+        "AI-powered SOC platforms.",
+        "RAG pipelines that ship.",
+        "secure enterprise systems.",
+      ];
+      const el = document.getElementById("typed-role");
+      let ri = 0,
+        ci = 0,
+        deleting = false;
+      function tick() {
+        const word = roles[ri];
+        if (!deleting) {
+          el.textContent = word.slice(0, ci + 1);
+          ci++;
+          if (ci === word.length) {
+            deleting = true;
+            setTimeout(tick, 1400);
+            return;
+          }
+        } else {
+          el.textContent = word.slice(0, ci - 1);
+          ci--;
+          if (ci === 0) {
+            deleting = false;
+            ri = (ri + 1) % roles.length;
+          }
+        }
+        setTimeout(tick, deleting ? 35 : 65);
+      }
+      tick();
+
+      // Mobile nav
+      document.getElementById("mobileBtn").addEventListener("click", () => {
+        document.getElementById("navLinks").classList.toggle("open");
       });
-    }, { threshold: 0.15 });
-    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+      document.querySelectorAll(".nav-links a").forEach((a) => {
+        a.addEventListener("click", () =>
+          document.getElementById("navLinks").classList.remove("open")
+        );
+      });
 
-    // Expand earlier roles
-    document.getElementById('logToggle').addEventListener('click', function() {
-      const hidden = document.getElementById('logHidden');
-      const isOpen = hidden.style.display === 'block';
-      hidden.style.display = isOpen ? 'none' : 'block';
-      this.textContent = isOpen ? 'show earlier roles (2015–2021) ↓' : 'hide earlier roles ↑';
-    });
-  </script>
+      // Scroll reveal
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("in");
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.15 }
+      );
+      document
+        .querySelectorAll(".reveal")
+        .forEach((el) => observer.observe(el));
 
-</body>
+      // Expand earlier roles
+      document
+        .getElementById("logToggle")
+        .addEventListener("click", function () {
+          const hidden = document.getElementById("logHidden");
+          const isOpen = hidden.style.display === "block";
+          hidden.style.display = isOpen ? "none" : "block";
+          this.textContent = isOpen
+            ? "show earlier roles (2015–2021) ↓"
+            : "hide earlier roles ↑";
+        });
+    </script>
+  </body>
 </html>
