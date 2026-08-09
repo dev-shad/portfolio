@@ -1,857 +1,737 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Shadei Sabino - Senior Full-Stack Developer Portfolio</title>
-    <link rel="stylesheet" href="./style.css" />
-  </head>
-  <body>
-    <!-- Navigation -->
-    <nav>
-      <div class="nav-container">
-        <div class="logo">SS</div>
-        <ul class="nav-links">
-          <li><a href="#home">Home</a></li>
-          <li><a href="#about">About</a></li>
-          <li><a href="#skills">Skills</a></li>
-          <li><a href="#experience">Experience</a></li>
-          <li><a href="#projects">Projects</a></li>
-          <li><a href="#contact">Contact</a></li>
-        </ul>
-        <button class="mobile-menu-btn">☰</button>
-      </div>
-    </nav>
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Shadei Sabino — Senior Full-Stack &amp; AI/RAG Platform Engineer</title>
+<meta name="description" content="Senior full-stack developer specializing in RAG pipelines, LLM integration, and cybersecurity platform architecture." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0e14;
+    --bg-elevated: #10151d;
+    --bg-elevated-2: #161d28;
+    --border: #1e2530;
+    --border-bright: #2a3340;
+    --text-primary: #e7ecef;
+    --text-secondary: #8b98a5;
+    --text-tertiary: #5c6772;
+    --amber: #ffb020;
+    --amber-dim: #ffb02022;
+    --teal: #45d9c7;
+    --teal-dim: #45d9c722;
+    --red: #ff5c5c;
+    --mono: 'IBM Plex Mono', ui-monospace, monospace;
+    --sans: 'Inter', -apple-system, sans-serif;
+  }
 
-    <!-- Hero Section -->
-    <section id="home" class="hero">
-      <div class="hero-content">
-        <div class="hero-text">
-          <h1>Hi, I'm <span class="gradient-text">Shadei Sabino</span></h1>
-          <p class="subtitle">Senior Software Engineer</p>
-          <p class="description">
-            Full-stack developer with 9+ years of experience building secure
-            enterprise applications, cloud solutions, and automated workflows. I
-            specialize in modernizing legacy systems, optimizing performance,
-            and delivering compliance-ready platforms (HIPAA, SOC, SIEM, Wazuh).
-          </p>
-          <div class="hero-buttons">
-            <a href="#contact" class="btn btn-primary">Get In Touch</a>
-            <a href="#projects" class="btn btn-secondary">View Projects</a>
-          </div>
-        </div>
-        <div class="hero-image">
-          <img
-            src="./images/profile.png"
-            alt="Shadei Sabino - Full-Stack Developer"
-            class="profile-image"
-          />
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text-primary);
+    font-family: var(--sans);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  a { color: inherit; text-decoration: none; }
+
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+
+  /* ---------- Top status bar ---------- */
+  .statusbar {
+    background: var(--bg-elevated);
+    border-bottom: 1px solid var(--border);
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    color: var(--text-tertiary);
+    letter-spacing: 0.03em;
+  }
+  .statusbar .wrap {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .statusbar .dot {
+    display: inline-block;
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--teal);
+    margin-right: 8px;
+    box-shadow: 0 0 0 0 var(--teal-dim);
+    animation: pulse 2.2s infinite;
+  }
+  @keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(69,217,199,0.5); }
+    70% { box-shadow: 0 0 0 6px rgba(69,217,199,0); }
+    100% { box-shadow: 0 0 0 0 rgba(69,217,199,0); }
+  }
+  .statusbar .status-ok { color: var(--teal); }
+
+  /* ---------- Nav ---------- */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(10,14,20,0.85);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 0;
+  }
+  .logo {
+    font-family: var(--mono);
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--text-primary);
+  }
+  .logo span { color: var(--amber); }
+  .nav-links {
+    display: flex;
+    gap: 32px;
+    list-style: none;
+    font-size: 0.88rem;
+    font-family: var(--mono);
+    color: var(--text-secondary);
+  }
+  .nav-links a { transition: color 0.2s; position: relative; }
+  .nav-links a:hover { color: var(--text-primary); }
+  .nav-links a::before { content: "· "; color: var(--amber); opacity: 0; transition: opacity 0.2s; }
+  .nav-links a:hover::before { opacity: 1; }
+  .mobile-btn { display: none; background: none; border: 1px solid var(--border-bright); color: var(--text-primary); font-size: 1.1rem; padding: 6px 10px; border-radius: 4px; cursor: pointer; }
+
+  @media (max-width: 760px) {
+    .nav-links { display: none; }
+    .mobile-btn { display: block; }
+    .nav-links.open {
+      display: flex; flex-direction: column; gap: 0;
+      position: absolute; top: 100%; left: 0; right: 0;
+      background: var(--bg-elevated); border-bottom: 1px solid var(--border);
+      padding: 8px 24px 16px;
+    }
+    .nav-links.open li { padding: 10px 0; border-bottom: 1px solid var(--border); }
+  }
+
+  /* ---------- Hero ---------- */
+  .hero {
+    padding: 96px 0 72px;
+    position: relative;
+  }
+  .hero .wrap { display: grid; grid-template-columns: 1.3fr 0.9fr; gap: 56px; align-items: center; }
+  @media (max-width: 860px) { .hero .wrap { grid-template-columns: 1fr; gap: 40px; } .hero { padding: 56px 0 48px; } }
+
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 0.8rem;
+    color: var(--amber);
+    letter-spacing: 0.08em;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 20px;
+  }
+  .eyebrow::before { content: ""; width: 22px; height: 1px; background: var(--amber); display: inline-block; }
+
+  .hero h1 {
+    font-family: var(--mono);
+    font-size: clamp(2rem, 5vw, 3.1rem);
+    font-weight: 600;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    margin-bottom: 20px;
+  }
+  .hero h1 .cursor {
+    display: inline-block;
+    width: 3px;
+    height: 0.9em;
+    background: var(--teal);
+    margin-left: 4px;
+    animation: blink 1s step-end infinite;
+    vertical-align: -0.1em;
+  }
+  @keyframes blink { 50% { opacity: 0; } }
+
+  #typed-role { color: var(--teal); }
+
+  .hero p.lede {
+    font-size: 1.05rem;
+    color: var(--text-secondary);
+    max-width: 52ch;
+    margin-bottom: 32px;
+  }
+  .hero .cta-row { display: flex; gap: 14px; flex-wrap: wrap; }
+
+  .btn {
+    font-family: var(--mono);
+    font-size: 0.88rem;
+    padding: 12px 22px;
+    border-radius: 4px;
+    border: 1px solid var(--border-bright);
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .btn-primary { background: var(--amber); color: #10151d; border-color: var(--amber); font-weight: 600; }
+  .btn-primary:hover { background: #ffc44d; transform: translateY(-1px); }
+  .btn-ghost { color: var(--text-primary); }
+  .btn-ghost:hover { border-color: var(--teal); color: var(--teal); }
+
+  .hero-photo {
+    position: relative;
+    border: 1px solid var(--border-bright);
+    border-radius: 8px;
+    overflow: hidden;
+    background: var(--bg-elevated);
+  }
+  .hero-photo::before {
+    content: "";
+    position: absolute; inset: 0;
+    background: linear-gradient(160deg, transparent 55%, rgba(255,176,32,0.12));
+    z-index: 2; pointer-events: none;
+  }
+  .hero-photo img { width: 100%; display: block; filter: grayscale(15%) contrast(1.05); }
+  .hero-photo .tag {
+    position: absolute; bottom: 12px; left: 12px;
+    font-family: var(--mono); font-size: 0.7rem;
+    background: rgba(10,14,20,0.85); border: 1px solid var(--border-bright);
+    padding: 4px 10px; border-radius: 4px; color: var(--teal); z-index: 3;
+  }
+
+  /* ---------- Metrics strip ---------- */
+  .metrics {
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    background: var(--bg-elevated);
+  }
+  .metrics .wrap { display: grid; grid-template-columns: repeat(4, 1fr); }
+  @media (max-width: 700px) { .metrics .wrap { grid-template-columns: repeat(2, 1fr); } }
+  .metric {
+    padding: 28px 20px;
+    border-right: 1px solid var(--border);
+    text-align: center;
+  }
+  .metric:last-child { border-right: none; }
+  .metric .num {
+    font-family: var(--mono); font-size: 1.7rem; font-weight: 600; color: var(--text-primary);
+  }
+  .metric .num span { color: var(--amber); }
+  .metric .lbl { font-size: 0.78rem; color: var(--text-tertiary); margin-top: 4px; font-family: var(--mono); }
+
+  /* ---------- Section shell ---------- */
+  section { padding: 88px 0; }
+  .sec-head { margin-bottom: 48px; }
+  .sec-eyebrow {
+    font-family: var(--mono); font-size: 0.78rem; color: var(--amber);
+    letter-spacing: 0.08em; margin-bottom: 10px;
+  }
+  .sec-title { font-family: var(--mono); font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 600; }
+  .sec-sub { color: var(--text-secondary); margin-top: 10px; max-width: 60ch; }
+
+  .reveal { opacity: 0; transform: translateY(18px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .reveal.in { opacity: 1; transform: translateY(0); }
+
+  /* ---------- About ---------- */
+  .about-grid { display: grid; grid-template-columns: 1.4fr 1fr; gap: 48px; }
+  @media (max-width: 800px) { .about-grid { grid-template-columns: 1fr; } }
+  .about-text p { color: var(--text-secondary); margin-bottom: 16px; }
+  .about-text strong { color: var(--text-primary); font-weight: 600; }
+
+  .focus-list { display: flex; flex-direction: column; gap: 14px; }
+  .focus-item {
+    border: 1px solid var(--border);
+    background: var(--bg-elevated);
+    border-radius: 6px;
+    padding: 16px 18px;
+    border-left: 2px solid var(--teal);
+  }
+  .focus-item h4 { font-family: var(--mono); font-size: 0.9rem; margin-bottom: 4px; }
+  .focus-item p { font-size: 0.85rem; color: var(--text-secondary); }
+
+  /* ---------- Skills ---------- */
+  .skill-group { margin-bottom: 28px; }
+  .skill-group h3 {
+    font-family: var(--mono); font-size: 0.85rem; color: var(--text-tertiary);
+    text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 14px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .skill-group h3::after { content: ""; flex: 1; height: 1px; background: var(--border); }
+  .chip-row { display: flex; flex-wrap: wrap; gap: 10px; }
+  .chip {
+    font-family: var(--mono); font-size: 0.82rem;
+    border: 1px solid var(--border-bright);
+    background: var(--bg-elevated);
+    padding: 7px 13px; border-radius: 4px;
+    color: var(--text-secondary);
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .chip:hover { border-color: var(--amber); color: var(--text-primary); }
+
+  /* ---------- Experience (log style) ---------- */
+  .log { position: relative; padding-left: 28px; }
+  .log::before { content: ""; position: absolute; left: 5px; top: 6px; bottom: 6px; width: 1px; background: var(--border-bright); }
+  .log-entry { position: relative; padding-bottom: 44px; }
+  .log-entry:last-child { padding-bottom: 0; }
+  .log-entry::before {
+    content: ""; position: absolute; left: -28px; top: 4px;
+    width: 11px; height: 11px; border-radius: 50%;
+    background: var(--bg); border: 2px solid var(--amber);
+  }
+  .log-entry.current::before { background: var(--amber); }
+  .log-meta { font-family: var(--mono); font-size: 0.76rem; color: var(--text-tertiary); margin-bottom: 6px; }
+  .log-meta .badge-live {
+    color: var(--teal); border: 1px solid var(--teal); border-radius: 3px;
+    padding: 1px 7px; margin-left: 8px; font-size: 0.68rem;
+  }
+  .log-role { font-family: var(--mono); font-size: 1.05rem; font-weight: 600; }
+  .log-company { color: var(--text-secondary); font-size: 0.92rem; margin-bottom: 12px; }
+  .log-details { color: var(--text-secondary); font-size: 0.92rem; }
+  .log-details li { margin-bottom: 7px; margin-left: 18px; }
+  .log-tech { margin-top: 14px; display: flex; flex-wrap: wrap; gap: 8px; }
+  .log-tech span {
+    font-family: var(--mono); font-size: 0.72rem; color: var(--text-tertiary);
+    border: 1px solid var(--border); padding: 3px 9px; border-radius: 3px;
+  }
+  .log-toggle {
+    font-family: var(--mono); font-size: 0.8rem; color: var(--teal);
+    cursor: pointer; margin-top: 10px; display: inline-block;
+    border: none; background: none;
+  }
+  .log-hidden { display: none; }
+
+  /* ---------- Projects ---------- */
+  .proj-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+  @media (max-width: 760px) { .proj-grid { grid-template-columns: 1fr; } }
+  .proj-card {
+    border: 1px solid var(--border);
+    background: var(--bg-elevated);
+    border-radius: 8px;
+    padding: 24px;
+    transition: transform 0.25s ease, border-color 0.25s ease;
+  }
+  .proj-card:hover { transform: translateY(-4px); border-color: var(--border-bright); }
+  .proj-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 14px; }
+  .proj-badge {
+    font-family: var(--mono); font-size: 0.68rem;
+    padding: 3px 8px; border-radius: 3px;
+    border: 1px solid var(--border-bright); color: var(--text-tertiary);
+  }
+  .proj-badge.nda { color: var(--red); border-color: rgba(255,92,92,0.4); }
+  .proj-title { font-family: var(--mono); font-size: 1.05rem; font-weight: 600; margin-bottom: 10px; }
+  .proj-desc { color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 16px; }
+  .proj-tech { display: flex; flex-wrap: wrap; gap: 7px; }
+  .proj-tech span {
+    font-family: var(--mono); font-size: 0.7rem; color: var(--teal);
+    background: var(--teal-dim); padding: 3px 8px; border-radius: 3px;
+  }
+
+  /* ---------- Contact ---------- */
+  .contact-panel {
+    border: 1px solid var(--border-bright);
+    background: var(--bg-elevated);
+    border-radius: 10px;
+    padding: 56px 40px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .contact-panel::before {
+    content: "";
+    position: absolute; inset: 0;
+    background: radial-gradient(circle at 30% 0%, rgba(255,176,32,0.08), transparent 60%);
+  }
+  .contact-panel h2 { font-family: var(--mono); font-size: 1.7rem; margin-bottom: 12px; position: relative; }
+  .contact-panel p { color: var(--text-secondary); margin-bottom: 28px; position: relative; }
+  .contact-links { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; position: relative; }
+
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 28px 0;
+    text-align: center;
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    color: var(--text-tertiary);
+  }
+</style>
+</head>
+<body>
+
+  <div class="statusbar">
+    <div class="wrap">
+      <div><span class="dot"></span><span class="status-ok">SYSTEM STATUS: AVAILABLE FOR NEW PROJECTS</span></div>
+      <div>UPTIME: 9.5 YRS &nbsp;|&nbsp; LAST DEPLOY: 2026</div>
+    </div>
+  </div>
+
+  <nav>
+    <div class="wrap nav-inner">
+      <div class="logo">SHADEI<span>_</span>SABINO</div>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#about">about</a></li>
+        <li><a href="#skills">skills</a></li>
+        <li><a href="#experience">experience</a></li>
+        <li><a href="#projects">projects</a></li>
+        <li><a href="#contact">contact</a></li>
+      </ul>
+      <button class="mobile-btn" id="mobileBtn">☰</button>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <div class="wrap">
+      <div class="hero-text">
+        <div class="eyebrow">SENIOR FULL-STACK &amp; PLATFORM ENGINEER</div>
+        <h1>Building systems for<br><span id="typed-role"></span><span class="cursor"></span></h1>
+        <p class="lede">
+          9+ years architecting secure, scalable platforms for U.S. clients — now focused
+          on RAG pipelines, LLM integration, and AI-powered systems for cybersecurity
+          operations. I turn raw operational data into real-time, actionable intelligence.
+        </p>
+        <div class="cta-row">
+          <a href="#contact" class="btn btn-primary">Start a project →</a>
+          <a href="#projects" class="btn btn-ghost">View work</a>
         </div>
       </div>
-    </section>
+      <div class="hero-photo">
+        <img src="./images/profile.png" alt="Shadei Sabino" />
+        <span class="tag">est. 2015</span>
+      </div>
+    </div>
+  </section>
 
-    <!-- About Section -->
-    <section id="about">
-      <h2 class="section-title">About Me</h2>
-      <p class="section-subtitle">
-        Passionate about building scalable solutions
-      </p>
-      <div class="about-content">
+  <div class="metrics">
+    <div class="wrap">
+      <div class="metric"><div class="num"><span>9.5</span>+</div><div class="lbl">YEARS EXPERIENCE</div></div>
+      <div class="metric"><div class="num"><span>15</span>+</div><div class="lbl">PROJECTS SHIPPED</div></div>
+      <div class="metric"><div class="num"><span>6</span></div><div class="lbl">COMPANIES TRUSTED</div></div>
+      <div class="metric"><div class="num"><span>3</span></div><div class="lbl">LLM PROVIDERS INTEGRATED</div></div>
+    </div>
+  </div>
+
+  <section id="about">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div class="sec-eyebrow">// 01 — ABOUT</div>
+        <h2 class="sec-title">Platform architect, security-minded</h2>
+      </div>
+      <div class="about-grid reveal">
         <div class="about-text">
           <p>
-            I'm a full-stack developer with 9.5 years of experience specializing
-            in enterprise application development, cloud infrastructure, and
-            security compliance. My expertise spans across modernizing legacy
-            systems, implementing CI/CD pipelines, and building scalable
-            microservices architectures.
+            I'm a full-stack developer and platform architect specializing in
+            <strong>enterprise application development, cloud infrastructure, and
+            security compliance</strong>. My work spans modernizing legacy systems,
+            implementing CI/CD pipelines, and building scalable microservices
+            architectures for U.S.-based clients.
           </p>
           <p>
-            Throughout my career, I've helped U.S. clients reduce costs and
-            boost efficiency through automation, scalable web applications, and
-            AWS cloud deployments. I have extensive experience with
-            compliance-ready platforms including HIPAA, SOC, SIEM, and Wazuh
-            implementations.
+            Over the last two years my focus has shifted toward <strong>applied AI</strong>:
+            designing RAG pipelines with hybrid vector and keyword search, integrating
+            LLM workflows (Claude, OpenAI, Gemini) via the Model Context Protocol, and
+            building multi-agent systems that assist real security operations teams —
+            including compliance-ready platforms across HIPAA, SOC, SIEM, and Wazuh.
           </p>
           <p>
-            I thrive in collaborative environments, working closely with
-            operations, security, and product teams to deliver robust solutions
-            that meet both business goals and technical constraints.
+            I thrive working closely with security, operations, and product teams to
+            deliver solutions that hold up under real production load — not just demos.
           </p>
         </div>
-        <div class="stats-grid">
-          <div class="stat-card">
-            <span class="stat-number">9.5+</span>
-            <span class="stat-label">Years Experience</span>
+        <div class="focus-list">
+          <div class="focus-item">
+            <h4>AI / RAG Engineering</h4>
+            <p>Hybrid retrieval, LLM orchestration, MCP servers, multi-agent workflows.</p>
           </div>
-          <div class="stat-card">
-            <span class="stat-number">15+</span>
-            <span class="stat-label">Projects Delivered</span>
+          <div class="focus-item">
+            <h4>Security Platform Architecture</h4>
+            <p>SIEM/Wazuh integration, RBAC, JWT auth, audit logging, SOC tooling.</p>
           </div>
-          <div class="stat-card">
-            <span class="stat-number">25+</span>
-            <span class="stat-label">Technologies Mastered</span>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Skills Section -->
-    <section id="skills">
-      <h2 class="section-title">Technical Skills</h2>
-      <p class="section-subtitle">
-        Comprehensive expertise across modern web technologies and cloud
-        platforms
-      </p>
-      <!-- Reorganized into card-based grid layout matching original React components -->
-      <div class="skills-container">
-        <div class="skill-category">
-          <h3>Languages & Runtimes</h3>
-          <div class="skills-grid">
-            <span class="skill-badge"
-              >PHP <span class="skill-years">|| 9yrs</span></span
-            >
-            <span class="skill-badge"
-              >JavaScript <span class="skill-years">|| 9yrs</span></span
-            >
-            <span class="skill-badge"
-              >Node.js <span class="skill-years">|| 4yrs</span></span
-            >
-            <span class="skill-badge"
-              >HTML <span class="skill-years">|| 9yrs</span></span
-            >
-            <span class="skill-badge"
-              >CSS <span class="skill-years">|| 9yrs</span></span
-            >
-            <span class="skill-badge"
-              >Bash (Unix shell) <span class="skill-years">|| 4yrs</span></span
-            >
-            <span class="skill-badge"
-              >TypeScript <span class="skill-years">|| 2yrs</span></span
-            >
-            <span class="skill-badge"
-              >Python <span class="skill-years">|| 3yrs</span></span
-            >
-            <span class="skill-badge"
-              >JAVA <span class="skill-years">|| 2yrs</span></span
-            >
-            <span class="skill-badge"
-              >Groovy <span class="skill-years">|| 2yrs</span></span
-            >
-          </div>
-        </div>
-
-        <div class="skill-category">
-          <h3>Frameworks & Libraries</h3>
-          <div class="skills-grid">
-            <span class="skill-badge"
-              >Laravel <span class="skill-years">|| 4yrs</span></span
-            >
-            <span class="skill-badge"
-              >Drupal <span class="skill-years">|| 6yrs</span></span
-            >
-            <span class="skill-badge"
-              >Express.js <span class="skill-years">|| 2yrs</span></span
-            >
-            <span class="skill-badge"
-              >React <span class="skill-years">|| 3yr</span></span
-            >
-            <span class="skill-badge"
-              >Tailwind CSS <span class="skill-years">|| 5yrs</span></span
-            >
-            <span class="skill-badge"
-              >Grails <span class="skill-years">|| 2yrs</span></span
-            >
-            <span class="skill-badge"
-              >jQuery <span class="skill-years">|| 6yrs</span></span
-            >
-            <span class="skill-badge"
-              >WordPress <span class="skill-years">|| 8yr</span></span
-            >
-            <span class="skill-badge"
-              >.NET <span class="skill-years">|| 1yr</span></span
-            >
-            <span class="skill-badge"
-              >VueJs <span class="skill-years">|| 1yr</span></span
-            >
-            <span class="skill-badge"
-              >NextJs <span class="skill-years">|| 1yr</span></span
-            >
-          </div>
-        </div>
-
-        <div class="skill-category">
-          <h3>Databases</h3>
-          <div class="skills-grid">
-            <span class="skill-badge"
-              >MySQL <span class="skill-years">|| 8yrs</span></span
-            >
-            <span class="skill-badge"
-              >SQL <span class="skill-years">|| 8yrs</span></span
-            >
-            <span class="skill-badge"
-              >MongoDB <span class="skill-years">|| 2yrs</span></span
-            >
-            <span class="skill-badge"
-              >Redis <span class="skill-years">|| 2yrs</span></span
-            >
-            <span class="skill-badge"
-              >PostgreSQL <span class="skill-years">|| 2yrs</span></span
-            >
-          </div>
-        </div>
-
-        <div class="skill-category">
-          <h3>Cloud & DevOps</h3>
-          <div class="skills-grid">
-            <span class="skill-badge"
-              >AWS <span class="skill-years">|| 4yrs</span></span
-            >
-            <span class="skill-badge"
-              >Docker <span class="skill-years">|| 4yr</span></span
-            >
-            <span class="skill-badge"
-              >GIT <span class="skill-years">|| 9yrs</span></span
-            >
-            <span class="skill-badge"
-              >Digital Ocean <span class="skill-years">|| 3yrs</span></span
-            >
-            <span class="skill-badge"
-              >Linode <span class="skill-years">|| 2yrs</span></span
-            >
-            <span class="skill-badge"
-              >Aliyun <span class="skill-years">|| 1yr</span></span
-            >
-            <span class="skill-badge"
-              >Pantheon <span class="skill-years">|| 1yr</span></span
-            >
-          </div>
-        </div>
-
-        <div class="skill-category">
-          <h3>Tools & Technologies</h3>
-          <div class="skills-grid">
-            <span class="skill-badge"
-              >WebSocket <span class="skill-years">|| 2yrs</span></span
-            >
-            <span class="skill-badge"
-              >n8n <span class="skill-years">|| 2yr</span></span
-            >
-            <span class="skill-badge"
-              >ExtJS <span class="skill-years">|| 2yrs</span></span
-            >
-          </div>
-        </div>
-
-        <div class="skill-category">
-          <h3>Compliance & Security</h3>
-          <div class="skills-grid">
-            <span class="skill-badge"
-              >HIPAA <span class="skill-years">|| 2yr</span></span
-            >
-            <span class="skill-badge"
-              >SOC <span class="skill-years">|| 2yr</span></span
-            >
-
-            <span class="skill-badge"
-              >Wazuh <span class="skill-years">|| 2yr</span></span
-            >
+          <div class="focus-item">
+            <h4>Full-Stack Delivery</h4>
+            <p>FastAPI, Laravel, React — from data model to deployed, monitored system.</p>
           </div>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- Experience Section -->
-    <section id="experience">
-      <h2 class="section-title">Work Experience</h2>
-      <p class="section-subtitle">My professional journey</p>
-      <div class="experience-timeline">
-        <!-- Experience 1 -->
-        <div class="experience-item">
-          <div class="experience-card">
-            <div class="experience-header">
-              <h3 class="experience-title">Senior Software Engineer</h3>
-              <div class="experience-company">USX Cyber: Cybersecurity</div>
-              <div class="experience-date">Jan 08, 2024 – Present</div>
-            </div>
-            <div class="experience-description">
-              <ul>
-                <li>
-                  Conduct technical assessments and architecture reviews across
-                  application codebases, APIs, data models, infrastructure,
-                  deployment pipelines, and security controls.
-                </li>
-                <li>
-                  Define and maintain the target platform architecture, ensuring
-                  scalability, maintainability, security, and alignment with
-                  long-term business objectives.
-                </li>
-                <li>
-                  Design and implement Continuous Integration and Continuous
-                  Deployment (CI/CD) pipelines to automate software delivery and
-                  infrastructure provisioning.
-                </li>
-                <li>
-                  Develop automation workflows and integrations using n8n, AWS
-                  services, Wazuh, Spiceworks, and other enterprise platforms to
-                  streamline operational processes and reporting.
-                </li>
-                <li>
-                  Define API standards, service boundaries, data contracts,
-                  DTOs, schemas, and integration patterns to ensure consistency
-                  across applications and services.
-                </li>
-                <li>
-                  Create migration strategies and technical roadmaps that enable
-                  platform modernization while minimizing disruption to ongoing
-                  business operations.
-                </li>
-                <li>
-                  Design, build, and maintain backend services, APIs, databases,
-                  and application integrations using modern development
-                  frameworks and cloud-native architectures.
-                </li>
-                <li>
-                  Manage application deployments across development, staging,
-                  and production environments while ensuring reliability,
-                  performance, and security.
-                </li>
-                <li>
-                  Establish development standards, coding conventions, and
-                  architectural guidelines for backend and frontend engineering
-                  teams.
-                </li>
-                <li>
-                  Design and implement Role-Based Access Control (RBAC),
-                  authentication, authorization, and security controls across
-                  applications and services.
-                </li>
-                <li>
-                  Define security architecture standards, including secrets
-                  management, API security, JWT authentication, audit logging,
-                  input validation, and rate-limiting controls.
-                </li>
-              </ul>
-            </div>
-            <div class="tech-stack">
-              <span class="tech-badge">PHP</span>
-              <span class="tech-badge">JavaScript</span>
-              <span class="tech-badge">Bash</span>
-              <span class="tech-badge">Node.js</span>
-              <span class="tech-badge">ReactJS</span>
-              <span class="tech-badge">Redis</span>
-              <span class="tech-badge">Docker</span>
-              <span class="tech-badge">AWS</span>
-              <span class="tech-badge">Python</span>
-              <span class="tech-badge">Git</span>
-              <span class="tech-badge">n8n</span>
-              <span class="tech-badge">Drupal</span>
-              <span class="tech-badge">CloudFormation</span>
-              <span class="tech-badge">CI/CD Pipelines</span>
-              <span class="tech-badge">C#</span>
-              <span class="tech-badge">API Design</span>
-              <span class="tech-badge">Platform Architecture</span>
-              <span class="tech-badge">Security Engineering</span>
-            </div>
-            <div class="mt-2">
-              <strong>Project:</strong> Customer Portal, SOAR (Security
-              Orchestration, Automation, and Response)
-            </div>
+  <section id="skills" style="background: var(--bg-elevated); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div class="sec-eyebrow">// 02 — STACK</div>
+        <h2 class="sec-title">Technical skills</h2>
+        <p class="sec-sub">Tools I reach for across AI, backend, and infrastructure work.</p>
+      </div>
+
+      <div class="reveal">
+        <div class="skill-group">
+          <h3>AI / LLM &amp; Retrieval</h3>
+          <div class="chip-row">
+            <span class="chip">LLM Integration (Claude/OpenAI/Gemini)</span>
+            <span class="chip">RAG Pipelines</span>
+            <span class="chip">Hybrid RAG (Vector + Keyword)</span>
+            <span class="chip">MCP</span>
+            <span class="chip">Multi-Agent Orchestration</span>
+            <span class="chip">Prompt Engineering</span>
           </div>
         </div>
-
-        <!-- Experience 2 -->
-        <div class="experience-item">
-          <div class="experience-card">
-            <div class="experience-header">
-              <h3 class="experience-title">Backend Game Developer</h3>
-              <div class="experience-company">FanYou PH Inc.</div>
-              <div class="experience-date">August 2023 – Feb 2024</div>
-            </div>
-            <div class="experience-description">
-              <ul>
-                <li>
-                  Managing and maintaining the game data, including player data,
-                  game statistics and in-game assets
-                </li>
-                <li>
-                  Effectively maintaining the server side of FanYou's existing
-                  game products
-                </li>
-                <li>
-                  Developing gameplay logic and algorithms in accordance with
-                  FanYou's front-end programmers
-                </li>
-                <li>
-                  Developing APIs and web services to enable communication
-                  between the game client and server
-                </li>
-                <li>
-                  Created Web Application server using express.js framework to
-                  build RESTful APIs
-                </li>
-                <li>
-                  Integrate Real-time Application using WebSocket for chat and
-                  pooling instant updates from user interactions
-                </li>
-                <li>
-                  Implement Microservice using NGINX to host separate node
-                  making it lightweight modular application
-                </li>
-              </ul>
-            </div>
-            <div class="tech-stack">
-              <span class="tech-badge">PHP</span>
-              <span class="tech-badge">TypeScript</span>
-              <span class="tech-badge">JavaScript</span>
-              <span class="tech-badge">Bash</span>
-              <span class="tech-badge">Node.js</span>
-              <span class="tech-badge">Express.js</span>
-              <span class="tech-badge">WebSocket</span>
-              <span class="tech-badge">Redis</span>
-              <span class="tech-badge">ReactJS</span>
-            </div>
-            <div class="mt-2">
-              <strong>Project:</strong> Box, MoWang, and SkyStory
-            </div>
+        <div class="skill-group">
+          <h3>Languages &amp; Runtimes</h3>
+          <div class="chip-row">
+            <span class="chip">Python</span><span class="chip">FastAPI</span>
+            <span class="chip">PHP</span><span class="chip">JAVA</span>
+            <span class="chip">Groovy</span><span class="chip">Node.js</span>
+            <span class="chip">TypeScript</span><span class="chip">C#</span>
+            <span class="chip">Bash</span>
           </div>
         </div>
-
-        <!-- Experience 3 -->
-        <div class="experience-item">
-          <div class="experience-card">
-            <div class="experience-header">
-              <h3 class="experience-title">Senior Software Developer</h3>
-              <div class="experience-company">HEDY Philippines Inc.</div>
-              <div class="experience-date">August 2021 – July 2023</div>
-            </div>
-            <div class="experience-description">
-              <ul>
-                <li>
-                  Design, develop, and implement robust, scalable microservices
-                  architecture to integrate with Drupal and Laravel-based
-                  systems
-                </li>
-                <li>Software Testing, bug fixing, and documenting processes</li>
-                <li>
-                  Develop and maintain APIs in both Drupal and Laravel to
-                  support integrations and ensure effective communication
-                  between services
-                </li>
-                <li>
-                  Collaborate with product teams, UX/UI designers, and other
-                  engineers to ensure seamless integration across various
-                  components of the application
-                </li>
-                <li>
-                  Integrate Third Party APIs using OAuth2 standard machine to
-                  machine authentication
-                </li>
-              </ul>
-            </div>
-            <div class="tech-stack">
-              <span class="tech-badge">PHP</span>
-              <span class="tech-badge">Laravel 9</span>
-              <span class="tech-badge">JavaScript</span>
-              <span class="tech-badge">HTML</span>
-              <span class="tech-badge">MySQL</span>
-              <span class="tech-badge">CSS</span>
-              <span class="tech-badge">AWS</span>
-              <span class="tech-badge">Drupal 10</span>
-            </div>
-            <div class="mt-2">
-              <strong>Project:</strong> Booking System (Laravel), Medpass
-              Microservice Integrations and Drupal CMS Platform
-            </div>
+        <div class="skill-group">
+          <h3>Frameworks &amp; Frontend</h3>
+          <div class="chip-row">
+            <span class="chip">Laravel</span><span class="chip">Grails</span>
+            <span class="chip">Express.js</span><span class="chip">Next.js</span>
+            <span class="chip">React</span><span class="chip">Vue.js</span>
+            <span class="chip">ExtJS</span><span class="chip">Quasar</span>
+            <span class="chip">n8n</span>
           </div>
         </div>
-
-        <!-- Experience 4 -->
-        <div class="experience-item">
-          <div class="experience-card">
-            <div class="experience-header">
-              <h3 class="experience-title">Senior Software Developer</h3>
-              <div class="experience-company">StackTrek Enterprise Inc.</div>
-              <div class="experience-date">July 2019 – August 2021</div>
-            </div>
-            <div class="experience-description">
-              <ul>
-                <li>
-                  Troubleshoot, debug, and resolve issues related to
-                  microservices, APIs, and backend integrations
-                </li>
-                <li>Optimize API performance, scalability, and security</li>
-                <li>
-                  Ensure APIs and microservices are well-documented and easy to
-                  maintain
-                </li>
-                <li>
-                  Implement and manage authentication and authorization
-                  mechanisms across microservices, including OAuth2, JWT, or
-                  custom API keys
-                </li>
-                <li>
-                  Work with cross-functional teams to gather requirements and
-                  define integration points for APIs and microservices
-                </li>
-              </ul>
-            </div>
-            <div class="tech-stack">
-              <span class="tech-badge">PHP</span>
-              <span class="tech-badge">Groovy on Grails</span>
-              <span class="tech-badge">JavaScript</span>
-              <span class="tech-badge">HTML</span>
-              <span class="tech-badge">MySQL</span>
-              <span class="tech-badge">CSS</span>
-              <span class="tech-badge">Drupal</span>
-            </div>
-            <div class="mt-2">
-              <strong>Project:</strong> HHA Hospital Management System, Reverse
-              Proxy Integration with Third Party App
-            </div>
+        <div class="skill-group">
+          <h3>Data &amp; Storage</h3>
+          <div class="chip-row">
+            <span class="chip">MySQL</span><span class="chip">MongoDB</span>
+            <span class="chip">Redis</span><span class="chip">OpenSearch</span>
+            <span class="chip">Vector Search (k-NN)</span>
           </div>
         </div>
-
-        <!-- Experience 5 -->
-        <div class="experience-item">
-          <div class="experience-card">
-            <div class="experience-header">
-              <h3 class="experience-title">Software Developer</h3>
-              <div class="experience-company">Grow Forward JP Inc.</div>
-              <div class="experience-date">March 2018 – September 2018</div>
-            </div>
-            <div class="experience-description">
-              <ul>
-                <li>
-                  Develop and maintain both front-end and back-end components of
-                  web applications, ensuring seamless integration between the
-                  two
-                </li>
-                <li>
-                  Ensure cross-browser compatibility and mobile responsiveness
-                  of applications
-                </li>
-                <li>
-                  Contribute to the architecture and technical design of new
-                  features, ensuring the best solutions for scalability and
-                  long-term maintainability
-                </li>
-                <li>Integrate Payment Gateway APIs</li>
-                <li>
-                  Troubleshoot, debug, and resolve production issues quickly and
-                  efficiently, minimizing downtime and user impact
-                </li>
-              </ul>
-            </div>
-            <div class="tech-stack">
-              <span class="tech-badge">PHP</span>
-              <span class="tech-badge">JavaScript</span>
-              <span class="tech-badge">HTML</span>
-              <span class="tech-badge">MySQL</span>
-              <span class="tech-badge">CSS</span>
-              <span class="tech-badge">.NET</span>
-              <span class="tech-badge">WordPress</span>
-            </div>
-            <div class="mt-2">
-              <strong>Project:</strong> Coaching Tool, Robot Payment API
-              Integration
-            </div>
-          </div>
-        </div>
-
-        <!-- Experience 6 -->
-        <div class="experience-item">
-          <div class="experience-card">
-            <div class="experience-header">
-              <h3 class="experience-title">Software Developer</h3>
-              <div class="experience-company">Hinduja Global Solutions</div>
-              <div class="experience-date">June 2015 – September 2017</div>
-            </div>
-            <div class="experience-description">
-              <ul>
-                <li>Software Deployment</li>
-                <li>
-                  Working closely with business analyst and determine tech stack
-                  for software development
-                </li>
-                <li>Integrating third party vendor application</li>
-                <li>Testing and Bug fixing</li>
-                <li>Linux Server application configuration tune up</li>
-                <li>
-                  Built a blog platform using Node.js allowing users to create,
-                  edit, and delete blog posts
-                </li>
-                <li>
-                  Integrated a MongoDB database for storing and retrieving blog
-                  content
-                </li>
-                <li>
-                  Implemented RESTful APIs for CRUD operations on blog posts
-                </li>
-              </ul>
-            </div>
-            <div class="tech-stack">
-              <span class="tech-badge">PHP</span>
-              <span class="tech-badge">Java</span>
-              <span class="tech-badge">Laravel 5</span>
-              <span class="tech-badge">JavaScript</span>
-              <span class="tech-badge">HTML</span>
-              <span class="tech-badge">MySQL</span>
-              <span class="tech-badge">CSS</span>
-              <span class="tech-badge">Drupal</span>
-              <span class="tech-badge">Node.js</span>
-              <span class="tech-badge">Python</span>
-              <span class="tech-badge">MongoDB</span>
-            </div>
-            <div class="mt-2">
-              <strong>Project:</strong> Gamification and Centralize Info Blog
-              Platform
-            </div>
+        <div class="skill-group">
+          <h3>Cloud, DevOps &amp; Security</h3>
+          <div class="chip-row">
+            <span class="chip">AWS (EC2/Lambda/S3/CloudFormation)</span>
+            <span class="chip">Docker</span><span class="chip">CI/CD</span>
+            <span class="chip">SIEM / Wazuh</span><span class="chip">SOC Operations</span>
+            <span class="chip">HIPAA Compliance</span><span class="chip">RBAC</span>
+            <span class="chip">JWT Auth</span><span class="chip">Audit Logging</span>
           </div>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- Projects Section -->
-    <section id="projects">
-      <h2 class="section-title">Featured Projects</h2>
-      <p class="section-subtitle">Some of my recent work</p>
-      <div class="projects-grid">
-        <div class="project-card">
-          <img
-            src="https://placehold.co/400x200?text=Customer+Portal+Dashboard+with+Dark+Theme+Modern+UI+Design"
-            alt="Customer Portal Dashboard with Dark Theme Modern UI Design"
-            class="project-image"
-          />
-          <div class="project-content">
-            <div class="project-badges">
-              <span class="badge badge-private">Private/NDA</span>
-            </div>
-            <h3 class="project-title">Customer Portal & SOAR Platform</h3>
-            <p class="project-description">
-              Built a comprehensive security orchestration platform with
-              automated metric generation, CI/CD pipelines, and CloudFormation
-              infrastructure automation. Implements cybersecurity monitoring and
-              response workflows.
-            </p>
-            <div class="project-tech">
-              <span class="project-tech-badge">React</span>
-              <span class="project-tech-badge">Node.js</span>
-              <span class="project-tech-badge">AWS</span>
-              <span class="project-tech-badge">n8n</span>
-              <span class="project-tech-badge">Docker</span>
-              <span class="project-tech-badge">Drupal</span>
-            </div>
+  <section id="experience">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div class="sec-eyebrow">// 03 — EXPERIENCE LOG</div>
+        <h2 class="sec-title">Where I've shipped</h2>
+      </div>
+
+      <div class="log reveal">
+
+        <div class="log-entry current">
+          <div class="log-meta">JAN 2024 — PRESENT <span class="badge-live">LIVE</span></div>
+          <div class="log-role">Senior Software Developer — Platform Architecture, AI &amp; Security Engineering</div>
+          <div class="log-company">USX Cyber · Cybersecurity</div>
+          <ul class="log-details">
+            <li>Architected a RAG pipeline with hybrid vector + keyword search (OpenSearch k-NN) powering an LLM-driven SOC analyst assistant for faster, more accurate alert triage.</li>
+            <li>Built multi-tenant MCP servers exposing secure, scoped access to SharePoint, SIEM, and knowledge-base data across LLM providers (Claude, OpenAI, Gemini).</li>
+            <li>Shipped production Python/FastAPI microservices orchestrating multi-agent workflows and serving AI/RAG endpoints to internal and client-facing apps.</li>
+            <li>Defined platform architecture, API standards, and security controls (RBAC, JWT, audit logging) across the org; mentored junior developers on secure coding and AI integration patterns.</li>
+          </ul>
+          <div class="log-tech">
+            <span>Python</span><span>FastAPI</span><span>RAG</span><span>OpenSearch k-NN</span><span>MCP</span><span>AWS</span><span>Docker</span>
           </div>
         </div>
 
-        <div class="project-card">
-          <img
-            src="https://placehold.co/400x200?text=Game+Server+Backend+Architecture+with+Real+Time+Data+Flow"
-            alt="Game Server Backend Architecture with Real Time Data Flow"
-            class="project-image"
-          />
-          <div class="project-content">
-            <div class="project-badges">
-              <span class="badge badge-private">Private/NDA</span>
-            </div>
-            <h3 class="project-title">Gaming Backend System</h3>
-            <p class="project-description">
-              Developed scalable game server infrastructure with real-time
-              WebSocket communication, RESTful APIs, and microservices
-              architecture for multiple gaming products. Handled player data,
-              statistics, and in-game assets.
-            </p>
-            <div class="project-tech">
-              <span class="project-tech-badge">Node.js</span>
-              <span class="project-tech-badge">Express.js</span>
-              <span class="project-tech-badge">WebSocket</span>
-              <span class="project-tech-badge">Redis</span>
-              <span class="project-tech-badge">TypeScript</span>
-              <span class="project-tech-badge">NGINX</span>
-            </div>
+        <div class="log-entry">
+          <div class="log-meta">AUG 2023 — FEB 2024</div>
+          <div class="log-role">Backend Game Developer</div>
+          <div class="log-company">FanYou PH Inc.</div>
+          <ul class="log-details">
+            <li>Maintained server-side infrastructure for live game titles, ensuring uptime and performance under real-time load.</li>
+            <li>Built RESTful APIs and WebSocket-based real-time features for chat and live in-app updates.</li>
+            <li>Implemented an NGINX-based microservice architecture for lightweight, modular application nodes.</li>
+          </ul>
+          <div class="log-tech"><span>Node.js</span><span>Express.js</span><span>WebSocket</span><span>Redis</span><span>C#</span></div>
+        </div>
+
+        <div class="log-entry">
+          <div class="log-meta">AUG 2021 — JUL 2023</div>
+          <div class="log-role">Senior Software Developer</div>
+          <div class="log-company">HEDY Philippines Inc.</div>
+          <ul class="log-details">
+            <li>Designed scalable microservices integrated with Drupal and Laravel-based systems.</li>
+            <li>Owned testing, bug fixing, and technical documentation; integrated third-party APIs via OAuth2 M2M auth.</li>
+          </ul>
+          <div class="log-tech"><span>PHP</span><span>Laravel 9</span><span>MySQL</span><span>AWS</span><span>Drupal 10</span></div>
+        </div>
+
+        <button class="log-toggle" id="logToggle">show earlier roles (2015–2021) ↓</button>
+
+        <div class="log-hidden" id="logHidden">
+          <div class="log-entry">
+            <div class="log-meta">JUL 2019 — AUG 2021</div>
+            <div class="log-role">Senior Software Developer</div>
+            <div class="log-company">StackTrek Enterprise Inc.</div>
+            <ul class="log-details">
+              <li>Optimized API performance, scalability, and security across microservices.</li>
+              <li>Implemented auth/authorization across services — OAuth2, JWT, custom API keys.</li>
+            </ul>
+            <div class="log-tech"><span>PHP</span><span>Groovy on Grails</span><span>MySQL</span><span>Drupal</span></div>
+          </div>
+
+          <div class="log-entry">
+            <div class="log-meta">MAR 2018 — SEP 2018</div>
+            <div class="log-role">Software Developer</div>
+            <div class="log-company">Grow Forward JP Inc.</div>
+            <ul class="log-details">
+              <li>Built front-end and back-end components with cross-browser, mobile-responsive delivery.</li>
+              <li>Integrated payment gateway APIs; resolved production issues to minimize downtime.</li>
+            </ul>
+            <div class="log-tech"><span>PHP</span><span>MySQL</span><span>.NET</span><span>WordPress</span></div>
+          </div>
+
+          <div class="log-entry">
+            <div class="log-meta">JUN 2015 — SEP 2017</div>
+            <div class="log-role">Software Developer</div>
+            <div class="log-company">Hinduja Global Solutions</div>
+            <ul class="log-details">
+              <li>Built a Node.js/MongoDB blog platform with full CRUD REST APIs and gamification features.</li>
+              <li>Led deployment and Linux server configuration; integrated third-party vendor applications.</li>
+            </ul>
+            <div class="log-tech"><span>Node.js</span><span>MongoDB</span><span>PHP</span><span>Laravel 5</span></div>
           </div>
         </div>
 
-        <div class="project-card">
-          <img
-            src="https://placehold.co/400x200?text=Healthcare+Booking+System+Interface+with+Calendar+and+Forms"
-            alt="Healthcare Booking System Interface with Calendar and Forms"
-            class="project-image"
-          />
-          <div class="project-content">
-            <div class="project-badges">
-              <span class="badge badge-private">Private/NDA</span>
-            </div>
-            <h3 class="project-title">Healthcare Booking System</h3>
-            <p class="project-description">
-              Created a comprehensive booking platform with Laravel backend and
-              microservices integration. Implemented Medpass API integration and
-              OAuth2 authentication for secure healthcare data management.
-            </p>
-            <div class="project-tech">
-              <span class="project-tech-badge">Laravel 9</span>
-              <span class="project-tech-badge">PHP</span>
-              <span class="project-tech-badge">MySQL</span>
-              <span class="project-tech-badge">AWS</span>
-              <span class="project-tech-badge">OAuth2</span>
-            </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="projects" style="background: var(--bg-elevated); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div class="sec-eyebrow">// 04 — SELECTED WORK</div>
+        <h2 class="sec-title">Recent projects</h2>
+      </div>
+
+      <div class="proj-grid reveal">
+        <div class="proj-card">
+          <div class="proj-top">
+            <span class="proj-badge nda">PRIVATE / NDA</span>
           </div>
+          <div class="proj-title">AI-Powered SOC Alert Triage</div>
+          <p class="proj-desc">RAG pipeline with hybrid vector + keyword search feeding an LLM-driven SOC analyst assistant — faster, more accurate alert triage in production.</p>
+          <div class="proj-tech"><span>FastAPI</span><span>RAG</span><span>OpenSearch</span><span>MCP</span></div>
         </div>
 
-        <div class="project-card">
-          <img
-            src="https://placehold.co/400x200?text=Hospital+Management+Dashboard+with+Patient+Records+and+Analytics"
-            alt="Hospital Management Dashboard with Patient Records and Analytics"
-            class="project-image"
-          />
-          <div class="project-content">
-            <div class="project-badges">
-              <span class="badge badge-private">Private/NDA</span>
-            </div>
-            <h3 class="project-title">Hospital Management System</h3>
-            <p class="project-description">
-              Developed enterprise hospital management platform with
-              microservices architecture, reverse proxy integration, and secure
-              authentication mechanisms including OAuth2 and JWT for healthcare
-              operations.
-            </p>
-            <div class="project-tech">
-              <span class="project-tech-badge">Groovy on Grails</span>
-              <span class="project-tech-badge">PHP</span>
-              <span class="project-tech-badge">MySQL</span>
-              <span class="project-tech-badge">Drupal</span>
-              <span class="project-tech-badge">OAuth2</span>
-            </div>
+        <div class="proj-card">
+          <div class="proj-top">
+            <span class="proj-badge nda">PRIVATE / NDA</span>
           </div>
+          <div class="proj-title">Multi-Tenant MCP Server Layer</div>
+          <p class="proj-desc">Reusable MCP servers exposing secure, scoped access to SharePoint, SIEM, and knowledge-base data across multiple LLM providers.</p>
+          <div class="proj-tech"><span>Python</span><span>MCP</span><span>RBAC</span><span>AWS</span></div>
         </div>
 
-        <div class="project-card">
-          <img
-            src="https://placehold.co/400x200?text=Payment+Gateway+Integration+Interface+with+Secure+Transaction+Flow"
-            alt="Payment Gateway Integration Interface with Secure Transaction Flow"
-            class="project-image"
-          />
-          <div class="project-content">
-            <div class="project-badges">
-              <span class="badge badge-private">Private/NDA</span>
-            </div>
-            <h3 class="project-title">Payment Gateway Integration</h3>
-            <p class="project-description">
-              Integrated Robot Payment API for a coaching tool platform,
-              implementing secure payment processing, transaction management,
-              and cross-browser compatible checkout flows.
-            </p>
-            <div class="project-tech">
-              <span class="project-tech-badge">PHP</span>
-              <span class="project-tech-badge">JavaScript</span>
-              <span class="project-tech-badge">MySQL</span>
-              <span class="project-tech-badge">WordPress</span>
-              <span class="project-tech-badge">.NET</span>
-            </div>
+        <div class="proj-card">
+          <div class="proj-top">
+            <span class="proj-badge nda">PRIVATE / NDA</span>
           </div>
+          <div class="proj-title">Healthcare Booking Platform</div>
+          <p class="proj-desc">Booking platform on a Laravel backend with microservices integration, Medpass API, and OAuth2-secured healthcare data handling.</p>
+          <div class="proj-tech"><span>Laravel 9</span><span>MySQL</span><span>AWS</span><span>OAuth2</span></div>
         </div>
 
-        <div class="project-card">
-          <img
-            src="https://placehold.co/400x200?text=Blog+Platform+with+Rich+Text+Editor+and+Content+Management"
-            alt="Blog Platform with Rich Text Editor and Content Management"
-            class="project-image"
-          />
-          <div class="project-content">
-            <h3 class="project-title">Centralized Blog Platform</h3>
-            <p class="project-description">
-              Built a scalable blog platform using Node.js and MongoDB with
-              RESTful API architecture. Features include content creation,
-              editing, user management, and gamification elements for enhanced
-              engagement.
-            </p>
-            <div class="project-tech">
-              <span class="project-tech-badge">Node.js</span>
-              <span class="project-tech-badge">MongoDB</span>
-              <span class="project-tech-badge">Express.js</span>
-              <span class="project-tech-badge">REST API</span>
-              <span class="project-tech-badge">Laravel 5</span>
-            </div>
+        <div class="proj-card">
+          <div class="proj-top">
+            <span class="proj-badge">PUBLIC</span>
           </div>
+          <div class="proj-title">Live Game Server Infrastructure</div>
+          <p class="proj-desc">Real-time WebSocket game server infrastructure with RESTful APIs and microservices architecture across multiple live titles.</p>
+          <div class="proj-tech"><span>Node.js</span><span>WebSocket</span><span>Redis</span><span>NGINX</span></div>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- Contact Section -->
-    <section id="contact">
-      <h2 class="section-title">Get In Touch</h2>
-      <p class="section-subtitle">Let's work together on your next project</p>
-      <div class="contact-content">
-        <p style="color: var(--text-secondary); margin-bottom: 2rem">
-          I'm always interested in hearing about new projects and opportunities.
-          Whether you have a question or just want to say hi, feel free to reach
-          out!
-        </p>
-
-        <div class="contact-info">
-          <div class="contact-item">
-            <h3>Email</h3>
-            <a href="mailto:sabinoshadei@gmail.com">sabinoshadei@gmail.com</a>
-          </div>
-          <div class="contact-item">
-            <h3>Phone</h3>
-            <a href="tel:0992-247-8714">0992-247-8714</a>
-          </div>
+  <section id="contact">
+    <div class="wrap reveal">
+      <div class="contact-panel">
+        <h2>Let's build something that ships.</h2>
+        <p>Open to new projects — AI/RAG integration, security platform work, or full-stack builds.</p>
+        <div class="contact-links">
+          <a href="mailto:sabinoshadei@gmail.com" class="btn btn-primary">sabinoshadei@gmail.com</a>
+          <a href="tel:0992-247-8714" class="btn btn-ghost">0992-247-8714</a>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- Footer -->
-    <footer>
-      <p>&copy; 2025 Shadei Sabino. All rights reserved.</p>
-      <p style="margin-top: 0.5rem">Built with passion and dedication</p>
-    </footer>
+  <footer>
+    <div class="wrap">© 2026 Shadei Sabino — built and deployed with care.</div>
+  </footer>
 
-    <script>
-      // Form submission handler
-      function handleSubmit(event) {
-        event.preventDefault();
-        alert("Thank you for your message! I will get back to you soon.");
-        event.target.reset();
+  <script>
+    // Typing effect for hero role
+    const roles = ["AI-powered SOC platforms.", "RAG pipelines that ship.", "secure enterprise systems."];
+    const el = document.getElementById('typed-role');
+    let ri = 0, ci = 0, deleting = false;
+    function tick() {
+      const word = roles[ri];
+      if (!deleting) {
+        el.textContent = word.slice(0, ci + 1);
+        ci++;
+        if (ci === word.length) { deleting = true; setTimeout(tick, 1400); return; }
+      } else {
+        el.textContent = word.slice(0, ci - 1);
+        ci--;
+        if (ci === 0) { deleting = false; ri = (ri + 1) % roles.length; }
       }
+      setTimeout(tick, deleting ? 35 : 65);
+    }
+    tick();
 
-      // Mobile menu toggle (basic functionality)
-      document
-        .querySelector(".mobile-menu-btn")
-        .addEventListener("click", function () {
-          const navLinks = document.querySelector(".nav-links");
-          if (navLinks.style.display === "flex") {
-            navLinks.style.display = "none";
-          } else {
-            navLinks.style.display = "flex";
-            navLinks.style.flexDirection = "column";
-            navLinks.style.position = "absolute";
-            navLinks.style.top = "100%";
-            navLinks.style.left = "0";
-            navLinks.style.right = "0";
-            navLinks.style.backgroundColor = "var(--bg-secondary)";
-            navLinks.style.padding = "1rem";
-            navLinks.style.borderTop = "1px solid var(--border-color)";
-          }
-        });
+    // Mobile nav
+    document.getElementById('mobileBtn').addEventListener('click', () => {
+      document.getElementById('navLinks').classList.toggle('open');
+    });
+    document.querySelectorAll('.nav-links a').forEach(a => {
+      a.addEventListener('click', () => document.getElementById('navLinks').classList.remove('open'));
+    });
 
-      // Smooth scroll enhancement
-      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
-        anchor.addEventListener("click", function (e) {
-          e.preventDefault();
-          const target = document.querySelector(this.getAttribute("href"));
-          if (target) {
-            target.scrollIntoView({
-              behavior: "smooth",
-              block: "start",
-            });
-            // Close mobile menu if open
-            if (window.innerWidth <= 768) {
-              document.querySelector(".nav-links").style.display = "none";
-            }
-          }
-        });
+    // Scroll reveal
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in');
+          observer.unobserve(entry.target);
+        }
       });
-    </script>
-  </body>
+    }, { threshold: 0.15 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // Expand earlier roles
+    document.getElementById('logToggle').addEventListener('click', function() {
+      const hidden = document.getElementById('logHidden');
+      const isOpen = hidden.style.display === 'block';
+      hidden.style.display = isOpen ? 'none' : 'block';
+      this.textContent = isOpen ? 'show earlier roles (2015–2021) ↓' : 'hide earlier roles ↑';
+    });
+  </script>
+
+</body>
 </html>
